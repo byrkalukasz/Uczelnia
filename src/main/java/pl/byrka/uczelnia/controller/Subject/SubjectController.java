@@ -26,11 +26,11 @@ public class SubjectController {
     @GetMapping
     public ResponseEntity<List<SubjectDTO>> getAllSubjectWithLectures()
     {
+        log.info("Entering [getAllSubjectWithLectures]");
         var response = subjectService.getAllSubjectWithLecturer();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("{id}")
-
     public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable("id") long id)
     {
         log.info("Entering [getLecturerById] with ID = {}", id);
@@ -41,6 +41,7 @@ public class SubjectController {
     @GetMapping(value = "/byLecturer/{lecturerId}")
     public ResponseEntity<List<SubjectDTO>> getAllSubjectByLecturer(@PathVariable("lecturerId") long id)
     {
+        log.info("Entering [getAllSubjectByLecturer] with ID = {}", id);
         var response = subjectService.getAllSubjectByLecturer(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
