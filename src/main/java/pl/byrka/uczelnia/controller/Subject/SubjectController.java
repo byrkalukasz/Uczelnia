@@ -1,5 +1,6 @@
 package pl.byrka.uczelnia.controller.Subject;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import pl.byrka.uczelnia.service.Subject.SubjectService;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/v1/subject")
 public class SubjectController {
@@ -28,9 +30,12 @@ public class SubjectController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("{id}")
+
     public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable("id") long id)
     {
+        log.info("Entering [getLecturerById] with ID = {}", id);
         var response = subjectService.getSubjectById(id);
+        log.info("Getting response with subject ID = : {}", response.getId());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping(value = "/byLecturer/{lecturerId}")
@@ -42,7 +47,10 @@ public class SubjectController {
     @PostMapping
     public ResponseEntity<SubjectDTO> createSubject(@RequestBody SubjectCreate create)
     {
+        log.info("Entering [createSubject]");
         var response = subjectService.createNewSubject(create);
+        log.info("Created subject with ID = {}", response.getId());
+
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
