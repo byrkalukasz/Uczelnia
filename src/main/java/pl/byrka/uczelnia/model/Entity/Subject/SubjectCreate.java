@@ -12,7 +12,7 @@ public class SubjectCreate {
     public String name;
     public int ects;
     public typeEnum type;
-    public int lecturer;
+    public long lecturer;
 
     public enum typeEnum{
         Wyklad("Wykład"),

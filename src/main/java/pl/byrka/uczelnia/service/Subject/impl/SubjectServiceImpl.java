@@ -3,12 +3,11 @@ package pl.byrka.uczelnia.service.Subject.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
-import pl.byrka.uczelnia.model.DTO.Subject.SubjectCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectCreate;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
-import pl.byrka.uczelnia.repository.Subject.SubjectCreateRepository;
+import pl.byrka.uczelnia.repository.Lecturer.LecturerEntityRepository;
 import pl.byrka.uczelnia.repository.Subject.SubjectRepository;
 import pl.byrka.uczelnia.service.Subject.SubjectService;
 
@@ -18,13 +17,13 @@ import java.util.List;
 @Service
 public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
-    private final SubjectCreateRepository subjectCreateRepository;
+    private final LecturerEntityRepository lecturerEntityRepository;
 
     @Autowired
-    public SubjectServiceImpl(SubjectRepository subjectRepository, SubjectCreateRepository subjectCreateRepository) {
+    public SubjectServiceImpl(SubjectRepository subjectRepository,  LecturerEntityRepository lecturerEntityRepository) {
         super();
         this.subjectRepository = subjectRepository;
-        this.subjectCreateRepository = subjectCreateRepository;
+        this.lecturerEntityRepository = lecturerEntityRepository;
     }
 
     @Override
@@ -39,10 +38,10 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public SubjectDTO createNewSubject(SubjectCreate subjectEntity) {
-        var dst = mapSubjectToEntity(subjectEntity);
-        var response = subjectRepository.save(dst);
-        var resoult = getSubjectById(response.getId());
+    public SubjectDTO createNewSubject(SubjectCreate subjectCreate) {
+        var subjectEntity = mapSubjectToEntity(subjectCreate);
+        var response = subjectRepository.save(subjectEntity);
+        var resoult = mapSubjectToDTO(response);
         return resoult;
     }
 
@@ -53,7 +52,17 @@ public class SubjectServiceImpl implements SubjectService {
 
         return resoult;
     }
+    private SubjectEntity mapFromCreate(SubjectCreate src)
+    {
+        LecturerEntity lecturer = lecturerEntityRepository.getById(src.getLecturer());
+        SubjectEntity dst = new SubjectEntity();
+        dst.setType(src.getType().getTypeEnum());
+        dst.setName(src.getName());
+        dst.setEcts(src.getEcts());
+        dst.setLecturer((lecturer));
 
+        return  dst;
+    }
     private SubjectDTO mapSubjectToDTO(SubjectEntity src)
     {
         SubjectDTO dts = new SubjectDTO();
@@ -65,14 +74,14 @@ public class SubjectServiceImpl implements SubjectService {
         dts.setLecturer(mapLecturerFromEntiry(src.getLecturer()));
         return dts;
     }
-    private SubjectCreate mapSubjectToEntity(SubjectCreate src)
+    private SubjectEntity mapSubjectToEntity(SubjectCreate src)
     {
-        SubjectCreate dst = new SubjectCreate();
-        dst.setId(src.getId());
+        LecturerEntity lecturer = lecturerEntityRepository.getById(src.getLecturer());
+        SubjectEntity dst = new SubjectEntity();
         dst.setEcts(src.getEcts());
         dst.setName(src.getName());
-        dst.setType(src.getType()); //To widze do poprawy Enumy warto zapakować w osobny pakiet
-        dst.setLecturer(src.getLecturer());
+        dst.setType(src.getType().getTypeEnum());
+        dst.setLecturer(lecturer);
 
         return dst;
     }
