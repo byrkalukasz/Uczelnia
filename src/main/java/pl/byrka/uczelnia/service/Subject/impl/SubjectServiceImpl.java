@@ -2,6 +2,7 @@ package pl.byrka.uczelnia.service.Subject.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.byrka.uczelnia.exception.UczelniaException;
 import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
@@ -41,17 +42,38 @@ public class SubjectServiceImpl implements SubjectService {
     public SubjectDTO createNewSubject(SubjectCreate subjectCreate) {
         var subjectEntity = mapSubjectToEntity(subjectCreate);
         var response = subjectRepository.save(subjectEntity);
-        var resoult = mapSubjectToDTO(response);
-        return resoult;
+        var result = mapSubjectToDTO(response);
+        return result;
     }
 
     @Override
     public SubjectDTO getSubjectById(long id) {
-        var respomse = subjectRepository.getById(id);
-        var resoult = mapSubjectToDTO(respomse);
+        try {
+            var response = subjectRepository.getById(id);
+            var result = mapSubjectToDTO(response);
 
-        return resoult;
+            return result;
+        } catch (Exception e) {
+            throw new UczelniaException("Subject","ID",id);
+        }
     }
+
+    @Override
+    public List<SubjectDTO> getAllSubjectByLecturer(long id) {
+        try {
+            var response = subjectRepository.findAllByLecturer(id);
+            List<SubjectDTO> dst = new ArrayList<>();
+            for(var obj : response)
+            {
+                dst.add(mapSubjectToDTO(obj));
+            }
+            return dst;
+
+        } catch (Exception e) {
+            throw new UczelniaException("Subject","ID",id);
+        }
+    }
+
     private SubjectEntity mapFromCreate(SubjectCreate src)
     {
         LecturerEntity lecturer = lecturerEntityRepository.getById(src.getLecturer());

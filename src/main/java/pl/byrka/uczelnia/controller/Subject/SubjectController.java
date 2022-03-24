@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectCreate;
 import pl.byrka.uczelnia.service.Subject.SubjectService;
@@ -29,16 +28,22 @@ public class SubjectController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("{id}")
-    public ResponseEntity<SubjectDTO> getLecturerById(@PathVariable("id") long id)
+    public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable("id") long id)
     {
         var response = subjectService.getSubjectById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping(value = "/byLecturer/{lecturerId}")
+    public ResponseEntity<List<SubjectDTO>> getAllSubjectByLecturer(@PathVariable("lecturerId") long id)
+    {
+        var response = subjectService.getAllSubjectByLecturer(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<SubjectDTO> createSubject(@RequestBody SubjectCreate create)
     {
         var response = subjectService.createNewSubject(create);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 }
