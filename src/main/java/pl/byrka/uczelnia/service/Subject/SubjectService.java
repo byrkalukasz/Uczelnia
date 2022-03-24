@@ -10,4 +10,5 @@ public interface SubjectService {
     List<SubjectDTO> getAllSubjectWithLecturer();
     SubjectDTO createNewSubject(SubjectCreate subjectEntity);
     SubjectDTO getSubjectById(long id);
+    List<SubjectDTO> getAllSubjectByLecturer(long id);
 }
