@@ -1,5 +1,6 @@
 package pl.byrka.uczelnia.model.Entity.Student;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,6 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Data
 @Entity
 @Table(name = "student")
 public class StudentEntity {

@@ -19,10 +19,8 @@ public class LecturerServiceImpl implements LecturerService {
     private LecturerRepository lecturerRepository;
     private final LecturerMapper lecturerMapper;
 
-    @Autowired
     public LecturerServiceImpl(LecturerRepository lecturerRepository, LecturerMapper lecturerMapper)
     {
-        super();
         this.lecturerRepository = lecturerRepository;
         this.lecturerMapper = lecturerMapper;
     }
