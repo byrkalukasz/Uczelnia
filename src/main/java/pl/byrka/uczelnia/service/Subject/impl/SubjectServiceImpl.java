@@ -3,11 +3,8 @@ package pl.byrka.uczelnia.service.Subject.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.exception.UczelniaException;
-import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
-import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectCreate;
-import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
 import pl.byrka.uczelnia.model.mapper.SubjectMapper;
 import pl.byrka.uczelnia.repository.Lecturer.LecturerRepository;
 import pl.byrka.uczelnia.repository.Subject.SubjectRepository;
@@ -19,11 +16,13 @@ import java.util.List;
 @Service
 public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
+    private final LecturerRepository lecturerRepository;
     private final SubjectMapper subjectMapper;
 
     @Autowired
-    public SubjectServiceImpl(SubjectRepository subjectRepository, SubjectMapper subjectMapper) {
+    public SubjectServiceImpl(SubjectRepository subjectRepository, LecturerRepository lecturerRepository, SubjectMapper subjectMapper) {
         this.subjectRepository = subjectRepository;
+        this.lecturerRepository = lecturerRepository;
         this.subjectMapper = subjectMapper;
     }
 
@@ -40,7 +39,8 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public SubjectDTO createNewSubject(SubjectCreate subjectCreate) {
-        var subjectEntity = subjectMapper.mapSubjectToEntity(subjectCreate);
+        var lecturer = lecturerRepository.getById(subjectCreate.getLecturer());
+        var subjectEntity = subjectMapper.mapSubjectToEntity(subjectCreate, lecturer);
         var response = subjectRepository.save(subjectEntity);
         var result = subjectMapper.mapSubjectToDTO(response);
         return result;

@@ -1,11 +1,15 @@
 package pl.byrka.uczelnia.model.mapper.impl;
 
+import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerCreateEntity;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
+import pl.byrka.uczelnia.model.mapper.LecturerMapper;
 
-public class LecturerMapperImpl {
-    private LecturerDTO mapFromEntity(LecturerEntity src)
+@Service
+public class LecturerMapperImpl implements LecturerMapper {
+    @Override
+    public LecturerDTO mapFromEntity(LecturerEntity src)
     {
         LecturerDTO dest = new LecturerDTO();
         dest.setId(src.getId());
@@ -13,15 +17,9 @@ public class LecturerMapperImpl {
         dest.setEmail(src.getEmail());
         return  dest;
     }
-    private LecturerEntity mapFromCreateEntity(LecturerCreateEntity src)
+    @Override
+    public LecturerEntity mapFromCreateEntity(LecturerCreateEntity src)
     {
-        /* Czy to jest poprawne??
-        LecturerEntity dest = new LecturerEntity();
-        dest.name = src.name;
-        dest.surname = src.surname;
-        dest.email = createEmail(src.name, src.surname);
-        dest.title = src.title;
-        */
         LecturerEntity dest = new LecturerEntity();
         dest.setName(src.getName());
         dest.setSurname(src.getSurname());
