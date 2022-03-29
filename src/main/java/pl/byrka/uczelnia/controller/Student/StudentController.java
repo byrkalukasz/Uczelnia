@@ -31,6 +31,16 @@ public class StudentController {
         var result = studentService.getAllStudents();
         return ResponseEntity.ok(result);
     }
+    @GetMapping(value = "/active")
+    public ResponseEntity<List<StudentDTO>> getAllActiveStudents() {
+        var response = studentService.getAllActiveStudents();
+        return ResponseEntity.ok(response);
+    }
+    @PutMapping
+    public ResponseEntity<StudentDTO> updateStuden(@RequestBody  StudentDTO studentDTO) {
+        var response = studentService.updateStudent(studentDTO);
+        return ResponseEntity.ok(response);
+    }
     @PostMapping
     public ResponseEntity<StudentDTO> createStudent(@RequestBody StudetntCreateDTO studetntCreateDTO){
         log.info("Entering [creatingStudent]");

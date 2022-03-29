@@ -9,4 +9,5 @@ public class StudentDTO {
     public long id;
     public String name;
     public String surname;
+    public boolean active;
 }

@@ -9,4 +9,7 @@ public interface StudentService {
     StudentDTO getStudentById(long id);
     StudentDTO addStudent(StudetntCreateDTO studetntCreateDTO);
     List<StudentDTO> getAllStudents();
+    StudentDTO updateStudent(StudentDTO studentDTO);
+    List<StudentDTO> getAllActiveStudents();
+
 }

@@ -14,6 +14,7 @@ public class StudentMapperImpl implements StudentMapper {
         result.setId(studentEntity.getId());
         result.setName(studentEntity.getName());
         result.setSurname(studentEntity.getSurname());
+        result.setActive(studentEntity.isActive());
 
         return result;
     }
@@ -24,6 +25,7 @@ public class StudentMapperImpl implements StudentMapper {
         result.setId(studentDTO.getId());
         result.setName(studentDTO.getName());
         result.setSurname(studentDTO.getSurname());
+        result.setActive(studentDTO.isActive());
 
         return result;
     }
@@ -33,6 +35,7 @@ public class StudentMapperImpl implements StudentMapper {
         StudentEntity student = new StudentEntity();
         student.setName(studetntCreateDTO.getName());
         student.setSurname(studetntCreateDTO.getSurname());
+        student.setActive(true);
         return student;
     }
 }

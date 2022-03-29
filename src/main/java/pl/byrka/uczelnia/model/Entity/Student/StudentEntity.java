@@ -19,4 +19,6 @@ public class StudentEntity {
     public String name;
     @Column(name = "surname", nullable = false)
     public String surname;
+    @Column(name = "active", nullable = false)
+    public boolean active;
 }
