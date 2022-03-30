@@ -21,7 +21,7 @@ Lombok
 ```
 
 ## Database
-In this moment i use MsSQL but in backlog is Story to migrate to Postgres
+In this moment I use MsSQL but in backlog is Story to migrate to Postgres
 
 ## Core Functions
 
@@ -53,7 +53,7 @@ Implemented
 Backlog
 
 ```
-1. Swagger devidev into controller
+1. Swagger divided into controller
 2. Profiles
 ```
 
