@@ -1,8 +1,10 @@
 package pl.byrka.uczelnia.service.Student.impl;
 
 import org.springframework.stereotype.Service;
+import pl.byrka.uczelnia.exception.UczelniaException;
 import pl.byrka.uczelnia.model.DTO.Student.StudentDTO;
-import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
+import pl.byrka.uczelnia.model.DTO.Student.StudetntCreateDTO;
+import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 import pl.byrka.uczelnia.model.mapper.StudentMapper;
 import pl.byrka.uczelnia.repository.Student.StudentRepository;
 import pl.byrka.uczelnia.service.Student.StudentService;
@@ -41,5 +43,29 @@ public class StudentServiceImpl implements StudentService {
             result.add(studentMapper.mapFromEntity(src));
         }
         return result;
+    }
+
+    @Override
+    public StudentDTO updateStudent(StudentDTO studentDTO) {
+        StudentEntity existingStudent = studentRepository.findById(studentDTO.getId())
+                .orElseThrow(() -> new UczelniaException("Student","id", studentDTO.getId())
+                );
+        existingStudent.setName(studentDTO.getName());
+        existingStudent.setSurname(studentDTO.getSurname());
+        existingStudent.setActive(studentDTO.isActive());
+
+        return studentMapper.mapFromEntity(studentRepository.save(existingStudent));
+    }
+
+    @Override
+    public List<StudentDTO> getAllActiveStudents() {
+        List<StudentDTO> activeStudents = new ArrayList<>();
+        var response = studentRepository.findAll();
+        for(var student : response)
+        {
+            if(student.isActive() == true)
+                activeStudents.add(studentMapper.mapFromEntity(student));
+        }
+        return activeStudents;
     }
 }
