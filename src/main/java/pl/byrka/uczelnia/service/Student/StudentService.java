@@ -1,12 +1,12 @@
 package pl.byrka.uczelnia.service.Student;
 
 import pl.byrka.uczelnia.model.DTO.Student.StudentDTO;
-import pl.byrka.uczelnia.model.DTO.Student.StudetntCreateDTO;
+import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
 
 import java.util.List;
 
 public interface StudentService {
     StudentDTO getStudentById(long id);
-    StudentDTO addStudent(StudetntCreateDTO studetntCreateDTO);
+    StudentDTO addStudent(StudentCreateDTO studentCreateDTO);
     List<StudentDTO> getAllStudents();
 }

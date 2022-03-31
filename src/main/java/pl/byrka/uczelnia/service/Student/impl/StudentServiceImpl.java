@@ -2,7 +2,7 @@ package pl.byrka.uczelnia.service.Student.impl;
 
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Student.StudentDTO;
-import pl.byrka.uczelnia.model.DTO.Student.StudetntCreateDTO;
+import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
 import pl.byrka.uczelnia.model.mapper.StudentMapper;
 import pl.byrka.uczelnia.repository.Student.StudentRepository;
 import pl.byrka.uczelnia.service.Student.StudentService;
@@ -27,8 +27,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDTO addStudent(StudetntCreateDTO studetntCreateDTO) {
-        var result = studentRepository.save(studentMapper.mapFromCreate(studetntCreateDTO));
+    public StudentDTO addStudent(StudentCreateDTO studentCreateDTO) {
+        var result = studentRepository.save(studentMapper.mapFromCreate(studentCreateDTO));
         return studentMapper.mapFromEntity(result);
     }
 

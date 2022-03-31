@@ -2,7 +2,7 @@ package pl.byrka.uczelnia.model.mapper.impl;
 
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Student.StudentDTO;
-import pl.byrka.uczelnia.model.DTO.Student.StudetntCreateDTO;
+import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
 import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 import pl.byrka.uczelnia.model.mapper.StudentMapper;
 
@@ -29,10 +29,10 @@ public class StudentMapperImpl implements StudentMapper {
     }
 
     @Override
-    public StudentEntity mapFromCreate(StudetntCreateDTO studetntCreateDTO) {
+    public StudentEntity mapFromCreate(StudentCreateDTO studentCreateDTO) {
         StudentEntity student = new StudentEntity();
-        student.setName(studetntCreateDTO.getName());
-        student.setSurname(studetntCreateDTO.getSurname());
+        student.setName(studentCreateDTO.getName());
+        student.setSurname(studentCreateDTO.getSurname());
         return student;
     }
 }
