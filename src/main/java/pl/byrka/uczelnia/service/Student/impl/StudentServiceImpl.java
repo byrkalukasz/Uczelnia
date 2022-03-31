@@ -29,8 +29,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDTO addStudent(StudetntCreateDTO studetntCreateDTO) {
-        var result = studentRepository.save(studentMapper.mapFromCreate(studetntCreateDTO));
+    public StudentDTO addStudent(StudentCreateDTO studentCreateDTO) {
+        var result = studentRepository.save(studentMapper.mapFromCreate(studentCreateDTO));
         return studentMapper.mapFromEntity(result);
     }
 

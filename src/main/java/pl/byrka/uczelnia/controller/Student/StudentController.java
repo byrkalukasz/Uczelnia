@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.byrka.uczelnia.model.DTO.Student.StudentDTO;
-import pl.byrka.uczelnia.model.DTO.Student.StudetntCreateDTO;
+import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
 import pl.byrka.uczelnia.service.Student.StudentService;
 
 import java.util.List;
@@ -42,9 +42,9 @@ public class StudentController {
         return ResponseEntity.ok(response);
     }
     @PostMapping
-    public ResponseEntity<StudentDTO> createStudent(@RequestBody StudetntCreateDTO studetntCreateDTO){
+    public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentCreateDTO studentCreateDTO){
         log.info("Entering [creatingStudent]");
-        var result = studentService.addStudent(studetntCreateDTO);
+        var result = studentService.addStudent(studentCreateDTO);
         log.info("Created student with ID = {}", result.getId());
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
