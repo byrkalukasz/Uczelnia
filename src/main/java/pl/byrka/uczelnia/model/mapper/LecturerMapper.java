@@ -7,4 +7,5 @@ import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
 public interface LecturerMapper {
     LecturerEntity mapFromCreateEntity(LecturerCreateEntity src);
     LecturerDTO mapFromEntity(LecturerEntity src);
+    LecturerEntity mapFromDTO(LecturerDTO lecturerDTO);
 }

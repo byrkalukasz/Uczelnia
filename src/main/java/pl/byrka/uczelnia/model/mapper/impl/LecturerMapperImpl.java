@@ -17,6 +17,12 @@ public class LecturerMapperImpl implements LecturerMapper {
         dest.setEmail(src.getEmail());
         return  dest;
     }
+
+    @Override
+    public LecturerEntity mapFromDTO(LecturerDTO lecturerDTO) {
+        return null;
+    }
+
     @Override
     public LecturerEntity mapFromCreateEntity(LecturerCreateEntity src)
     {

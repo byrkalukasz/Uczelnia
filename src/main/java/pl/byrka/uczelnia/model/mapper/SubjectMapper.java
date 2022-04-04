@@ -8,4 +8,5 @@ import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
 public interface SubjectMapper {
      SubjectDTO mapSubjectToDTO(SubjectEntity src);
      SubjectEntity mapSubjectToEntity(SubjectCreate src, LecturerEntity lecturer);
+     SubjectEntity mapToEntity(SubjectDTO subjectDTO);
 }

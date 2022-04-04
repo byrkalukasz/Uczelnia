@@ -3,6 +3,7 @@ package pl.byrka.uczelnia.model.Entity.Lecturer;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
 
 import javax.persistence.*;
@@ -26,6 +27,9 @@ public class LecturerEntity {
     @Column(name = "email",nullable = false)
     public String email;
 
+
+    @ManyToMany(mappedBy = "lecturer")
+    private List<GradeEntity> grade;
     @OneToMany(mappedBy = "lecturer")
     private List<SubjectEntity> subjectEntities;
 }

@@ -2,8 +2,8 @@ package pl.byrka.uczelnia.service.Student.impl;
 
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.exception.UczelniaException;
+import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentDTO;
-import pl.byrka.uczelnia.model.DTO.Student.StudetntCreateDTO;
 import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 import pl.byrka.uczelnia.model.mapper.StudentMapper;
 import pl.byrka.uczelnia.repository.Student.StudentRepository;
