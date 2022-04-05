@@ -26,4 +26,6 @@ public class StudentEntity {
 
     @ManyToMany(mappedBy = "student")
     private List<GradeEntity> grade;
+    @OneToOne(mappedBy = "group")
+    private GradeEntity group;
 }
