@@ -1,5 +1,6 @@
 package pl.byrka.uczelnia.model.Emuns;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 import javax.lang.model.element.Element;
@@ -7,13 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum GradeValueEnum {
-    ndst("niedostateczna"),
-    dst("dostateczna"),
-    dstp("dostateczna plus"),
-    db("dobry"),
-    dbp("dobry Plus"),
-    bdb("bdb"),
-    bdbp("bdbp");
+    ndst("Niedostateczna"),
+    dst("Dostateczna"),
+    dstp("Dostateczna plus"),
+    db("Dobry"),
+    dbp("Dobry Plus"),
+    bdb("Bardzo dobry"),
+    bdbp("Bardzo dobry plus");
 
     private final String grade;
 
@@ -31,8 +32,9 @@ public enum GradeValueEnum {
     public static GradeValueEnum valueOfLabel(String e){
         return byGrade.get(e);
     }
-
-    public String getGradeValueEnum() {return grade;
+    @JsonValue
+    public String getGradeValueEnum() {
+        return grade;
     }
 
 }
