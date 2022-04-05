@@ -33,8 +33,8 @@ public class StudentMapperImpl implements StudentMapper {
     @Override
     public StudentEntity mapFromCreate(StudentCreateDTO studentCreateDTO) {
         StudentEntity student = new StudentEntity();
-        student.setName(studetntCreateDTO.getName());
-        student.setSurname(studetntCreateDTO.getSurname());
+        student.setName(studentCreateDTO.getName());
+        student.setSurname(studentCreateDTO.getSurname());
         student.setActive(true);
         return student;
     }

@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,4 +23,7 @@ public class StudentEntity {
     public String surname;
     @Column(name = "active", nullable = false)
     public boolean active;
+
+    @ManyToMany(mappedBy = "student")
+    private List<GradeEntity> grade;
 }
