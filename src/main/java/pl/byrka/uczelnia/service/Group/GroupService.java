@@ -7,4 +7,5 @@ import java.util.List;
 public interface GroupService {
     List<GroupDTO> getAllGroup();
     List<GroupDTO> getAllGroupForYear(String year);
+    GroupDTO createNewgroup(GroupDTO groupDTO);
 }

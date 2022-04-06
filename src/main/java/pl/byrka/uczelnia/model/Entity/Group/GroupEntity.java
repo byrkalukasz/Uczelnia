@@ -1,8 +1,6 @@
 package pl.byrka.uczelnia.model.Entity.Group;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import pl.byrka.uczelnia.model.Emuns.GroupTypeEnum;
 import pl.byrka.uczelnia.model.Emuns.LearningTypeEnum;
 import pl.byrka.uczelnia.model.Emuns.LearningscheduleEnum;
@@ -14,6 +12,9 @@ import javax.persistence.*;
 @Setter
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Group")
 public class GroupEntity {
     @Id

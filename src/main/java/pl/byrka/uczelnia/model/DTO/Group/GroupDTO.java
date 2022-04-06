@@ -1,10 +1,16 @@
 package pl.byrka.uczelnia.model.DTO.Group;
 
+import lombok.*;
 import pl.byrka.uczelnia.model.Emuns.GroupTypeEnum;
 import pl.byrka.uczelnia.model.Emuns.LearningTypeEnum;
 import pl.byrka.uczelnia.model.Emuns.LearningscheduleEnum;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
 
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class GroupDTO {
     public long id;
     public String fullName;
