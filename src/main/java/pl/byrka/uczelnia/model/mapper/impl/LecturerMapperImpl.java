@@ -8,7 +8,6 @@ import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
 import pl.byrka.uczelnia.model.mapper.LecturerMapper;
 
 @Service
-
 public class LecturerMapperImpl implements LecturerMapper {
     @Override
     public LecturerDTO mapFromEntity(LecturerEntity src)

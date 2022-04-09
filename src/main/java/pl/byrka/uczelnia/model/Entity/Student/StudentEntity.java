@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
+import pl.byrka.uczelnia.model.Entity.Group.GroupEntity;
+import pl.byrka.uczelnia.model.Entity.StudentGroup.StudentGroupEntity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -26,6 +28,6 @@ public class StudentEntity {
 
     @ManyToMany(mappedBy = "student")
     private List<GradeEntity> grade;
-    @OneToOne(mappedBy = "group")
-    private GradeEntity group;
+    @ManyToMany(mappedBy = "student")
+    private List<StudentGroupEntity> studentGroup;
 }

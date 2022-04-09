@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
+import pl.byrka.uczelnia.model.Entity.Group.GroupEntity;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
 
 import javax.persistence.*;
@@ -27,10 +28,12 @@ public class SubjectEntity implements Serializable {
     public String type;
 
     @ManyToMany(mappedBy = "subject")
+    private List<GroupEntity> group;
+    @ManyToMany(mappedBy = "subject")
     private List<GradeEntity> grade;
 
     @OneToOne
     @JoinColumn(name = "lecturer_id")
-    public LecturerEntity lecturer;
+    private LecturerEntity lecturer;
 
 }

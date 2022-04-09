@@ -7,7 +7,7 @@ import java.util.Map;
 
 public enum GroupTypeEnum {
 
-    WYK("Wykłakowa"),
+    WYK("Wykładowa"),
     CW("Ćwiczeniowa"),
     LAB("Labolatoryjna"),
     KON("Konserwatoryjna"),

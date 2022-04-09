@@ -1,5 +1,6 @@
 package pl.byrka.uczelnia.model.DTO.Grade;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.Setter;
 import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
@@ -16,10 +17,16 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class GradeDTO {
+
     public long id;
+
     public GradeValueEnum grade;
+
     public GradeStateEnum status;
+
     public StudentDTO student;
+
     public SubjectDTO subject;
+
     public LecturerDTO lecturer;
 }

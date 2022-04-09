@@ -4,18 +4,21 @@ import lombok.*;
 import pl.byrka.uczelnia.model.Emuns.GroupTypeEnum;
 import pl.byrka.uczelnia.model.Emuns.LearningTypeEnum;
 import pl.byrka.uczelnia.model.Emuns.LearningscheduleEnum;
+import pl.byrka.uczelnia.model.Entity.Major.MajorEntity;
+import pl.byrka.uczelnia.model.Entity.Specjalization.SpecializationEntity;
+import pl.byrka.uczelnia.model.Entity.StudentGroup.StudentGroupEntity;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
-@Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Group")
+@Table(name = "LearningGroup")
 public class GroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +31,12 @@ public class GroupEntity {
     public String StartYear;
     @Column(name = "type", nullable = false)
     public String type;
-    @Column(name = "major", nullable = false)
-    public String major;
-    @Column(name = "specialization", nullable = false)
-    public String specialization;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "major_id", referencedColumnName = "id", nullable = true)
+    public MajorEntity major;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = true)
+    public SpecializationEntity specialization;
     @Column(name = "learningSchedule", nullable = false)
     public String learningSchedule;
     @Column(name = "learningType", nullable = false)
@@ -41,4 +46,7 @@ public class GroupEntity {
     public SubjectEntity subject;
     @Column(name = "maxStudentCount", nullable = false)
     public int maxStudentCount;
+
+    @ManyToMany(mappedBy = "group")
+    private List<StudentGroupEntity> studentGroup;
 }
