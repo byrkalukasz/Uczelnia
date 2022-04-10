@@ -1,10 +1,8 @@
 ## Uczelnia
- Spring Boot simple project
+ Spring Boot simple project - main branch "Development"
  
 ## Information
 Project backlog -> https://byrka.atlassian.net
-
-1 sprint = 5 SP (1SP = 0,5 day work)
 
 ## Project
 
@@ -30,17 +28,21 @@ Implemented
 1. Student
 2. Lecturer
 3. Subject
+4. Grade
+5. Group
+6. Subject
+7. Major
+8. File
 ```
 
 In Implementation
 ```
-1. Grades
+1. Scheduler(Auto check Student Application)
 ```
 
 In Backlog
 ```
-1. Groups
-2. Timetable
+1. Timetable
 ```
 
 ## Features
@@ -48,6 +50,7 @@ In Backlog
 Implemented
 ```
 1. Swagger
+2. Scheduler
 ```
 
 Backlog
@@ -55,6 +58,7 @@ Backlog
 ```
 1. Swagger divided into controller
 2. Profiles
+3. More on atlasian
 ```
 
 ## Security
