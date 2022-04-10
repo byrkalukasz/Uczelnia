@@ -6,12 +6,14 @@ import pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity;
 import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Builder
+@Transactional
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Document")
@@ -32,7 +34,7 @@ public class DocumentEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = true)
     private StudentEntity student;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn(name = "studentApplication_id", referencedColumnName = "id", nullable = true)
     private StudentApplicationEntity studentApplication;
 

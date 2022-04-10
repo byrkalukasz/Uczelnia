@@ -4,6 +4,7 @@ import lombok.*;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 import pl.byrka.uczelnia.model.Entity.Group.GroupEntity;
 import pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity;
+import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -29,4 +30,6 @@ public class MajorEntity {
     private List<GroupEntity> group;
     @ManyToMany(mappedBy = "major")
     private List<StudentApplicationEntity> studentApplication;
+    @ManyToMany(mappedBy = "major")
+    private List<StudentEntity> studentEntity;
 }
