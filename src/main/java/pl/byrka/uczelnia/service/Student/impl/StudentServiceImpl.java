@@ -68,4 +68,10 @@ public class StudentServiceImpl implements StudentService {
         }
         return activeStudents;
     }
+
+    @Override
+    public List<Long> getAllStudentsWithoutGroups() {
+        var response = studentRepository.fingAllMajorsInStudentWithoutGroup();
+        return response;
+    }
 }

@@ -3,6 +3,7 @@ package pl.byrka.uczelnia.model.Entity.Subject;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import pl.byrka.uczelnia.model.Emuns.GroupTypeEnum;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 import pl.byrka.uczelnia.model.Entity.Group.GroupEntity;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
@@ -25,7 +26,8 @@ public class SubjectEntity implements Serializable {
     @Column(name = "ECTS")
     public int ects;
     @Column(name = "type")
-    public String type;
+    public GroupTypeEnum type;
+
 
     @ManyToMany(mappedBy = "subject")
     private List<GroupEntity> group;

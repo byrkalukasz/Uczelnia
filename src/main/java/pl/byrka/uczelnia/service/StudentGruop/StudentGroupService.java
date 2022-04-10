@@ -7,4 +7,5 @@ import java.util.List;
 public interface StudentGroupService {
     List<StudentGroupDTO> getAllStudentGroup();
     List<StudentGroupDTO> getAllGroupsForStudent(long id);
+
 }

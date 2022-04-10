@@ -3,6 +3,7 @@ package pl.byrka.uczelnia.model.Entity.Subject;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import pl.byrka.uczelnia.model.Emuns.GroupTypeEnum;
 
 import javax.persistence.Entity;
 
@@ -11,7 +12,7 @@ import javax.persistence.Entity;
 public class SubjectCreate {
     public String name;
     public int ects;
-    public typeEnum type;
+    public GroupTypeEnum type;
     public long lecturer;
 
     public enum typeEnum{

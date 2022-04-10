@@ -28,7 +28,7 @@ public enum LearningTypeEnum {
         return byType.get(e);
     }
     @JsonValue
-    public String getGradeValueEnum() {
+    public String getLearningTypeEnum() {
         return LearningType;
     }
 }

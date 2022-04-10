@@ -1,6 +1,9 @@
 package pl.byrka.uczelnia.model.DTO.Major;
 
 import lombok.*;
+import pl.byrka.uczelnia.model.Emuns.GroupTypeEnum;
+import pl.byrka.uczelnia.model.Emuns.LearningTypeEnum;
+import pl.byrka.uczelnia.model.Emuns.LearningscheduleEnum;
 
 @Getter
 @Setter
@@ -11,4 +14,7 @@ public class MajorDTO {
     public long id;
     public String name;
     public boolean active;
+    public LearningTypeEnum type;
+    public LearningscheduleEnum schedule;
+    private String startYear;
 }

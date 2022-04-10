@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum LearningscheduleEnum {
-    Z("Zapczne"),
+    Z("Zaoczne"),
     S("Stacjonarne"),
     W("Wieczorowe"),
     I("Internetowe");

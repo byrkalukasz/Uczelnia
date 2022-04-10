@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.byrka.uczelnia.model.Entity.File.DocumentEntity;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
+import pl.byrka.uczelnia.model.Entity.Major.MajorEntity;
 import pl.byrka.uczelnia.model.Entity.StudentGroup.StudentGroupEntity;
 
 import javax.persistence.*;
@@ -30,4 +31,10 @@ public class StudentEntity {
     private List<StudentGroupEntity> studentGroup;
     @ManyToMany(mappedBy = "student")
     private List<DocumentEntity> document;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "major_id", referencedColumnName = "id", nullable = true)
+    private MajorEntity major;
+
+
 }

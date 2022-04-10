@@ -2,6 +2,7 @@ package pl.byrka.uczelnia.model.mapper.impl;
 
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
+import pl.byrka.uczelnia.model.Emuns.GroupTypeEnum;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectCreate;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
@@ -23,7 +24,7 @@ public class SubjectMapperImpl implements SubjectMapper {
         dts.setId(src.getId());
         dts.setName(src.getName());
         dts.setEcts(src.getEcts());
-        dts.setType(src.getType());
+        dts.setType(src.getType().getGrojupTypeEnum());
         dts.setLecturer(lecturerMapper.mapFromEntity(src.getLecturer()));
 
         return dts;
@@ -35,7 +36,7 @@ public class SubjectMapperImpl implements SubjectMapper {
         SubjectEntity dst = new SubjectEntity();
         dst.setEcts(src.getEcts());
         dst.setName(src.getName());
-        dst.setType(src.getType().getTypeEnum());
+        dst.setType(src.getType());
         dst.setLecturer(lecturer);
 
         return dst;
@@ -47,7 +48,7 @@ public class SubjectMapperImpl implements SubjectMapper {
         dst.setId(subjectDTO.getId());
         dst.setName(subjectDTO.getName());
         dst.setEcts(subjectDTO.getEcts());
-        dst.setType(subjectDTO.getType());
+        dst.setType(GroupTypeEnum.valueOf(subjectDTO.getType()));
         dst.setLecturer(lecturerMapper.mapFromDTO(subjectDTO.getLecturer()));
 
         return dst;

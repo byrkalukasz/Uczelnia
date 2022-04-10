@@ -48,7 +48,7 @@ public class GroupMapperImpl implements GroupMapper {
                 .id(src.getId())
                 .fullName(src.getFullName())
                 .learningSchedule(src.getLearningSchedule().getGradeValueEnum())
-                .learningType(src.getLearningType().getGradeValueEnum())
+                .learningType(src.getLearningType().getLearningTypeEnum())
                 .major(majorMapper.mapFromDTO(src.major))
                 .maxStudentCount(src.getMaxStudentCount())
                 .shortName(src.getShortName())

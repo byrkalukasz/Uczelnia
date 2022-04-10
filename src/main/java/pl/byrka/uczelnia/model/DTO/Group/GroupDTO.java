@@ -16,23 +16,15 @@ import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupDTO {
-
     public long id;
-
     public String fullName;
-
     public String shortName;
-
     public String StartYear;
-
     public GroupTypeEnum type;
     public MajorDTO major;
     public SpecializationDTO specialization;
-
     public LearningscheduleEnum learningSchedule;
-
     public LearningTypeEnum learningType;
     public SubjectDTO subject;
-
     public int maxStudentCount;
 }
