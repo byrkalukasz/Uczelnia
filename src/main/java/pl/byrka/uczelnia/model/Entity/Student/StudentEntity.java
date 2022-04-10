@@ -1,10 +1,10 @@
 package pl.byrka.uczelnia.model.Entity.Student;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import pl.byrka.uczelnia.model.Entity.File.DocumentEntity;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
+import pl.byrka.uczelnia.model.Entity.StudentGroup.StudentGroupEntity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -26,4 +26,8 @@ public class StudentEntity {
 
     @ManyToMany(mappedBy = "student")
     private List<GradeEntity> grade;
+    @ManyToMany(mappedBy = "student")
+    private List<StudentGroupEntity> studentGroup;
+    @ManyToMany(mappedBy = "student")
+    private List<DocumentEntity> document;
 }

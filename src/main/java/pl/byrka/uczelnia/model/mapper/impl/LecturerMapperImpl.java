@@ -1,5 +1,6 @@
 package pl.byrka.uczelnia.model.mapper.impl;
 
+import lombok.Builder;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerCreateEntity;
@@ -11,11 +12,11 @@ public class LecturerMapperImpl implements LecturerMapper {
     @Override
     public LecturerDTO mapFromEntity(LecturerEntity src)
     {
-        LecturerDTO dest = new LecturerDTO();
-        dest.setId(src.getId());
-        dest.setFullName(createFullName(src.getName(), src.getSurname(), src.getTitle()));
-        dest.setEmail(src.getEmail());
-        return  dest;
+        return LecturerDTO.builder()
+                .id(src.getId())
+                .fullName(createFullName(src.getName(),src.getSurname(),src.getTitle()))
+                .email(src.getEmail())
+                .build();
     }
 
     @Override
