@@ -32,25 +32,24 @@ public class SubjectMapperImpl implements SubjectMapper {
 
     @Override
     public SubjectEntity mapSubjectToEntity(SubjectCreate src,LecturerEntity lecturer ) {
-        SubjectEntity dst = new SubjectEntity();
-        dst.setEcts(src.getEcts());
-        dst.setName(src.getName());
-        dst.setType(src.getType().getTypeEnum());
-        dst.setLecturer(lecturer);
-
-        return dst;
+        return SubjectEntity.builder()
+                .ects(src.getEcts())
+                .name(src.getName())
+                .ects(src.getEcts())
+                .type(src.getType().getTypeEnum())
+                .lecturer(lecturer)
+                .build();
     }
 
     @Override
     public SubjectEntity mapToEntity(SubjectDTO subjectDTO) {
-        SubjectEntity dst = new SubjectEntity();
-        dst.setId(subjectDTO.getId());
-        dst.setName(subjectDTO.getName());
-        dst.setEcts(subjectDTO.getEcts());
-        dst.setType(subjectDTO.getType());
-        dst.setLecturer(lecturerMapper.mapFromDTO(subjectDTO.getLecturer()));
-
-        return dst;
+        return SubjectEntity.builder()
+                .ects(subjectDTO.getEcts())
+                .name(subjectDTO.getName())
+                .ects(subjectDTO.getEcts())
+                .type(subjectDTO.getType())
+                .lecturer(lecturerMapper.mapFromDTO(subjectDTO.getLecturer()))
+                .build();
     }
 
 }

@@ -2,6 +2,7 @@ package pl.byrka.uczelnia.model.Entity.Specjalization;
 
 import lombok.*;
 import pl.byrka.uczelnia.model.Entity.Group.GroupEntity;
+import pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,4 +26,6 @@ public class SpecializationEntity {
 
     @ManyToMany(mappedBy = "specialization")
     private List<GroupEntity> group;
+    @ManyToMany(mappedBy = "specialization")
+    private List<StudentApplicationEntity> studentApplication;
 }
