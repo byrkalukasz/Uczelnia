@@ -5,11 +5,15 @@ import pl.byrka.uczelnia.model.Entity.Major.MajorEntity;
 import pl.byrka.uczelnia.model.Entity.Specjalization.SpecializationEntity;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
+//Dodano @Transactional ponieważ:
+//org.hibernate.LazyInitializationException: could not initialize proxy [pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity#3] - no Session
 @Getter
 @Setter
 @Entity
 @Builder
+@Transactional
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "student_application")

@@ -3,6 +3,7 @@ package pl.byrka.uczelnia.model.Entity.Specjalization;
 import lombok.*;
 import pl.byrka.uczelnia.model.Entity.Group.GroupEntity;
 import pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity;
+import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,4 +29,6 @@ public class SpecializationEntity {
     private List<GroupEntity> group;
     @ManyToMany(mappedBy = "specialization")
     private List<StudentApplicationEntity> studentApplication;
+    @ManyToMany(mappedBy = "specialization")
+    private List<StudentEntity> student;
 }
