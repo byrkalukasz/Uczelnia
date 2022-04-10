@@ -16,13 +16,13 @@ import java.util.List;
 public class StudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private long id;
     @Column(name = "name", nullable = false)
-    public String name;
+    private String name;
     @Column(name = "surname", nullable = false)
-    public String surname;
+    private String surname;
     @Column(name = "active", nullable = false)
-    public boolean active;
+    private boolean active;
 
     @ManyToMany(mappedBy = "student")
     private List<GradeEntity> grade;
