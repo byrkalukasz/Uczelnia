@@ -7,6 +7,7 @@ import pl.byrka.uczelnia.model.DTO.File.DocumentDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
+import pl.byrka.uczelnia.model.Emuns.ApplicationStatusEnum;
 import pl.byrka.uczelnia.model.Entity.File.DocumentEntity;
 import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 import pl.byrka.uczelnia.model.mapper.StudentApplicationMapper;
@@ -69,7 +70,8 @@ public class StudentApplicationImpl implements StudentApplicationService {
     @Override
     public StudentApplicationDTO cancelApplication(long id) {
         var application = studentApplicationRepository.getById(id);
-        application.setStatus("CANCELED");
+        application.setStatus(ApplicationStatusEnum.CANCELED.toString());
+        application.setMessage("Anulowano ręcznie");
         var updatedApplication = studentApplicationRepository.save(application);
         return studentApplicationMapper.mapFromEntity(updatedApplication);
     }
@@ -79,11 +81,11 @@ public class StudentApplicationImpl implements StudentApplicationService {
 
         return null;
     }
-    @Scheduled(cron = "0/30 * * * * *")
-    public void test(){
+    @Scheduled(cron = "${cron.expression}")
+    public void checkStudentApplications(){
+        log.info("Downloading applicants list");
         //Sprawdzenie czy istnieją jakies aplikacje
         var applicants = studentApplicationRepository.getAllActiveApplications("NEW");
-        log.info("Downloading applicants list");
         //jeżeli istnieją sprawdz czy mają dokumenty
         for(var id : applicants){
             log.info("Checking application ID : " + id);
@@ -93,22 +95,32 @@ public class StudentApplicationImpl implements StudentApplicationService {
             }else{
                 var response = checkAllDocuments(documentsForApplication);
                 if(response == true){
-
+                    createStudent(id);
                 }else{
                     addCount(id);
                 }
             }
         }
     }
+
+    @Override
+    public void chanceApplicationStatus(long id) {
+        var application = studentApplicationRepository.getById(id);
+        application.setStatus(ApplicationStatusEnum.NEW.toString());
+        application.setCount("0");
+        application.setMessage(null);
+        studentApplicationRepository.save(application);
+    }
+
     private boolean checkAllDocuments(List<DocumentEntity> documentsList){
         log.info("Checking Documents");
         //Aktualnie wymagamy Wnoisek, życiorys i świadectwo
-        List<String> documents = null;
+        List<String> documents = new ArrayList<>();
         List<String> passType = Arrays.asList("MAT", "ZYC", "WPS");
         for(var obj : documentsList){
-            var type = obj.getDocumentType();
-            if(!documents.contains(type) && passType.contains(obj)){
-                documents.add(obj.getDocumentType());
+            var type = obj.getType();
+            if(!documents.contains(type) && passType.contains(type)){
+                documents.add(obj.getType());
             }
         }
         if(documents.size() == 3){
@@ -121,8 +133,11 @@ public class StudentApplicationImpl implements StudentApplicationService {
         var application = studentApplicationRepository.getById(id);
         Long count = Long.parseLong(application.getCount());
         if(count == 4) {
-            cancelApplication(id);
             log.info("Canceled application with ID : " + id);
+            application.setMessage("Aplikacja anulowana automatycznie, brak wymaganych dokumentów");
+            application.setStatus(ApplicationStatusEnum.CANCELED.toString());
+            //Czemu to nie działa???
+            //cancelApplicationByScheduler(id, "Aplikacja anulowana automatycznie, brak wymaganych dokumentów");
         }else{
             count++;
             application.setCount(count.toString());
@@ -138,5 +153,19 @@ public class StudentApplicationImpl implements StudentApplicationService {
                 .major(applicant.getMajor())
                 .specialization(applicant.getSpecialization())
                 .build();
+        studentRepository.save(student);
+        applicant.setMessage("Pomyślnie utworzono studenta");
+        applicant.setStatus(ApplicationStatusEnum.DONE.toString());
+        studentApplicationRepository.save(applicant);
+    }
+    //Czemu w tej metodzie nie aktualizuje się status hmm....
+    private void cancelApplicationByScheduler(long id, String message){
+        log.info("Enter calcel with ID : " + id);
+        var applicationEntity = studentApplicationRepository.getById(id);
+        log.info("Find application with ID : " + applicationEntity.getId());
+        applicationEntity.setStatus(ApplicationStatusEnum.CANCELED.toString());
+        applicationEntity.setMessage(message);
+        log.info("Change application with ID : " + applicationEntity.getId() + applicationEntity.getName());
+        var test = studentApplicationRepository.save(applicationEntity);
     }
 }

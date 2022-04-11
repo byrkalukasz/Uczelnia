@@ -1,8 +1,6 @@
 package pl.byrka.uczelnia.model.Entity.Student;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import pl.byrka.uczelnia.model.Entity.File.DocumentEntity;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 import pl.byrka.uczelnia.model.Entity.Major.MajorEntity;
@@ -16,6 +14,8 @@ import java.util.List;
 @Setter
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "student")
 public class StudentEntity {
     @Id
@@ -27,10 +27,10 @@ public class StudentEntity {
     private String surname;
     @Column(name = "active", nullable = false)
     private boolean active;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "major_id", referencedColumnName = "id")
     private MajorEntity major;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "specialization_id", referencedColumnName = "id")
     private SpecializationEntity specialization;
 

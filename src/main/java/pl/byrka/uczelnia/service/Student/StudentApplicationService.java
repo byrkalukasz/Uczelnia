@@ -12,4 +12,6 @@ public interface StudentApplicationService {
     StudentApplicationDTO addNewApplication(StudentApplicationCreateDTO studentApplicationCreateDTO);
     StudentApplicationDTO cancelApplication(long id);
     List<DocumentDTO> getAllDocumentsForApplicant(long id);
+    void checkStudentApplications();
+    void chanceApplicationStatus(long id);
 }
