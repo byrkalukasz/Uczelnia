@@ -33,15 +33,23 @@ public class StudentApplicationControler {
         var response = studentApplicationService.getAllApplications();
         return ResponseEntity.ok(response);
     }
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<StudentApplicationDTO> addNewApplication(@RequestBody StudentApplicationCreateDTO studentApplicationDTO){
         log.info("Entering [getApplicationByID]");
         var response = studentApplicationService.addNewApplication(studentApplicationDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-    @PutMapping
+    @PutMapping()
     public ResponseEntity<StudentApplicationDTO> cancelApplication(@RequestParam long id){
         var response = studentApplicationService.cancelApplication(id);
         return ResponseEntity.ok(response);
+    }
+    @PostMapping(value = "/activeScheduler")
+    public void activeScheduler(){
+        studentApplicationService.checkStudentApplications();
+    }
+    @PostMapping(value = "/resetStatus")
+    public void resetStatus(@RequestParam long id){
+        studentApplicationService.chanceApplicationStatus(id);
     }
 }

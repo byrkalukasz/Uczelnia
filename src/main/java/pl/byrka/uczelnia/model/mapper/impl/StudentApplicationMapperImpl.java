@@ -32,6 +32,8 @@ public class StudentApplicationMapperImpl implements StudentApplicationMapper {
                 .specialization(specializationMapper.mapFromEntity(src.getSpecialization()))
                 .status(ApplicationStatusEnum.valueOf(src.getStatus()))
                 .surname(src.getSurname())
+                .message(src.getMessage())
+                .state(src.getState())
                 .build();
     }
 
@@ -46,6 +48,8 @@ public class StudentApplicationMapperImpl implements StudentApplicationMapper {
                 .specialization(specializationMapper.mapFromDTO(src.getSpecialization()))
                 .status(src.getStatus().getApplicationStatusEnum())
                 .surname(src.getSurname())
+                .message(src.getMessage())
+                .state(src.getState())
                 .build();
     }
 
@@ -59,6 +63,7 @@ public class StudentApplicationMapperImpl implements StudentApplicationMapper {
                 .specialization(specialization)
                 .status(src.getStatus().toString())
                 .surname(src.getSurname())
+                .state(0)
                 .build();
     }
 }

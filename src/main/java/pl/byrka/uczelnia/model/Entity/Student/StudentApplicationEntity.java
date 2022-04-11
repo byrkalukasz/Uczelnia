@@ -18,6 +18,13 @@ import javax.transaction.Transactional;
 @NoArgsConstructor
 @Table(name = "student_application")
 public class StudentApplicationEntity {
+    /*
+    Możliwe wartości pola state - aktualnie nie używane przez brak kolejki do wymiany danych
+    0 - Utworzona
+    1 - Wysłana do weryfikacji
+    2 - odebrana odpowiedz
+    3 - Przeprocesowana
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -31,6 +38,10 @@ public class StudentApplicationEntity {
     private String status;
     @Column(name = "count", nullable = false)
     private String count;
+    @Column(name = "state", nullable = true)
+    private long state;
+    @Column(name = "Message", nullable = true)
+    private String message;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "major_id", referencedColumnName = "id")

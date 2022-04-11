@@ -19,6 +19,8 @@ public class StudentApplicationDTO {
     private String pesel;
     private ApplicationStatusEnum status;
     private String count;
+    private long state;
+    private String message;
     private MajorDTO major;
     private SpecializationDTO specialization;
 }
