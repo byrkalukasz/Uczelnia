@@ -18,15 +18,13 @@ public class SubjectMapperImpl implements SubjectMapper {
     @Override
     public SubjectDTO mapSubjectToDTO(SubjectEntity src)
     {
-        SubjectDTO dts = new SubjectDTO();
-
-        dts.setId(src.getId());
-        dts.setName(src.getName());
-        dts.setEcts(src.getEcts());
-        dts.setType(src.getType());
-        dts.setLecturer(lecturerMapper.mapFromEntity(src.getLecturer()));
-
-        return dts;
+        return SubjectDTO.builder()
+                .ects(src.getEcts())
+                .name(src.getName())
+                .ects(src.getEcts())
+                .type(src.getType())
+                .lecturer(lecturerMapper.mapFromEntity(src.getLecturer()))
+                .build();
     }
 
 

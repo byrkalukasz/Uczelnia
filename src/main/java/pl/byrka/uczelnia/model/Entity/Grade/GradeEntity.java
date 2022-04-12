@@ -1,8 +1,6 @@
 package pl.byrka.uczelnia.model.Entity.Grade;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import pl.byrka.uczelnia.model.Emuns.GradeStateEnum;
 import pl.byrka.uczelnia.model.Emuns.GradeValueEnum;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
@@ -15,6 +13,9 @@ import javax.persistence.*;
 @Setter
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Grade")
 public class GradeEntity {
     @Id
