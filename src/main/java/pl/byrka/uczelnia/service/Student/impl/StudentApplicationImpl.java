@@ -1,14 +1,16 @@
 package pl.byrka.uczelnia.service.Student.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jms.annotation.JmsListener;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.File.DocumentDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationDTO;
-import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
 import pl.byrka.uczelnia.model.Emuns.ApplicationStatusEnum;
 import pl.byrka.uczelnia.model.Entity.File.DocumentEntity;
+import pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity;
 import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 import pl.byrka.uczelnia.model.mapper.StudentApplicationMapper;
 import pl.byrka.uczelnia.repository.File.DocumentRepository;
@@ -31,14 +33,17 @@ public class StudentApplicationImpl implements StudentApplicationService {
     private final SpecializationRepository specializationRepository;
     private final DocumentRepository documentRepository;
     private final StudentRepository studentRepository;
+    private final JmsTemplate jmsTemplate;
+    private String destination = "${activemq.send}";
 
-    public StudentApplicationImpl(StudentApplicationMapper studentApplicationMapper, StudentApplicationRepository studentApplicationRepository, MajorRepository majorRepository, SpecializationRepository specializationRepository, DocumentRepository documentRepository, StudentRepository studentRepository) {
+    public StudentApplicationImpl(StudentApplicationMapper studentApplicationMapper, StudentApplicationRepository studentApplicationRepository, MajorRepository majorRepository, SpecializationRepository specializationRepository, DocumentRepository documentRepository, StudentRepository studentRepository, JmsTemplate jmsTemplate) {
         this.studentApplicationMapper = studentApplicationMapper;
         this.studentApplicationRepository = studentApplicationRepository;
         this.majorRepository = majorRepository;
         this.specializationRepository = specializationRepository;
         this.documentRepository = documentRepository;
         this.studentRepository = studentRepository;
+        this.jmsTemplate = jmsTemplate;
     }
 
     @Override
@@ -80,6 +85,20 @@ public class StudentApplicationImpl implements StudentApplicationService {
     public List<DocumentDTO> getAllDocumentsForApplicant(long id) {
 
         return null;
+    }
+    @Scheduled(cron = "${activemq.cron.expression}")
+    public void sendApplicationToValidator(){
+        log.info("Downloading applicants list");
+        var applicants = studentApplicationRepository.findAll();
+        for(var obj : applicants){
+            var send = studentApplicationMapper.mapToMessage(obj).toString();
+            jmsTemplate.convertAndSend(destination,send);
+        }
+
+    }
+    @JmsListener(destination = "${activemq.receive}")
+    public void reviceStudentApplications(StudentApplicationEntity studentApplication){
+        log.info("Reciving studentApplication");
     }
     @Scheduled(cron = "${cron.expression}")
     public void checkStudentApplications(){
