@@ -1,11 +1,11 @@
-package pl.byrka.uczelnia.model.Entity.Lecturer;
+package pl.byrka.uczelnia.model.DTO.Lecturer;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class LecturerUpdateEntity {
+public class LecturerUpdateDTO {
     public long id;
     public String name;
     public String surname;

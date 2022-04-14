@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
-import pl.byrka.uczelnia.model.Entity.Subject.SubjectCreate;
+import pl.byrka.uczelnia.model.DTO.Subject.SubjectCreate;
 import pl.byrka.uczelnia.service.Subject.SubjectService;
 
 import java.util.List;

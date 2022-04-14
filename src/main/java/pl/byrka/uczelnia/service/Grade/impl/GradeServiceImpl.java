@@ -5,7 +5,6 @@ import pl.byrka.uczelnia.exception.UczelniaException;
 import pl.byrka.uczelnia.model.DTO.Grade.GradeCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Grade.GradeDTO;
 import pl.byrka.uczelnia.model.DTO.Grade.GradeUpdateDTO;
-import pl.byrka.uczelnia.model.Emuns.GradeValueEnum;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 import pl.byrka.uczelnia.model.mapper.GradeMapper;
 import pl.byrka.uczelnia.model.mapper.LecturerMapper;
@@ -92,7 +91,6 @@ public class GradeServiceImpl implements GradeService {
                 () -> new UczelniaException("Grade","Id",id)
         );
 
-        //Wyciągnąć te 3 pierdoły jako osoban metoda bo ciągle używana
         var student = studentRepository.getById(gradeDTO.getStudent());
         var lecturer = lecturerRepository.getById(gradeDTO.getLecturer());
         var subject = subjectRepository.getById(gradeDTO.getSubject());

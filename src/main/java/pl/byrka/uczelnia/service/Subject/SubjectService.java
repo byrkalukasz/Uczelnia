@@ -1,8 +1,7 @@
 package pl.byrka.uczelnia.service.Subject;
 
-import pl.byrka.uczelnia.model.DTO.Subject.SubjectCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
-import pl.byrka.uczelnia.model.Entity.Subject.SubjectCreate;
+import pl.byrka.uczelnia.model.DTO.Subject.SubjectCreate;
 
 import java.util.List;
 

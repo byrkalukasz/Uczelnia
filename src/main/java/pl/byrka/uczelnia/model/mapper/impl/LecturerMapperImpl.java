@@ -1,9 +1,8 @@
 package pl.byrka.uczelnia.model.mapper.impl;
 
-import lombok.Builder;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
-import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerCreateEntity;
+import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerCreateDTO;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
 import pl.byrka.uczelnia.model.mapper.LecturerMapper;
 
@@ -25,7 +24,7 @@ public class LecturerMapperImpl implements LecturerMapper {
     }
 
     @Override
-    public LecturerEntity mapFromCreateEntity(LecturerCreateEntity src)
+    public LecturerEntity mapFromCreateEntity(LecturerCreateDTO src)
     {
         LecturerEntity dest = new LecturerEntity();
         dest.setName(src.getName());

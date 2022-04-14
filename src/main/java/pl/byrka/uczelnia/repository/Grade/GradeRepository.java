@@ -8,6 +8,7 @@ import pl.byrka.uczelnia.model.DTO.Grade.GradeDTO;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface GradeRepository extends JpaRepository<GradeEntity, Long> {
@@ -15,4 +16,5 @@ public interface GradeRepository extends JpaRepository<GradeEntity, Long> {
 
     @Query(value = getAllForStudent)
     List<GradeEntity> getAllGradesForUser(@Param("student_id") long student_id);
+
 }

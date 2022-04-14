@@ -3,7 +3,7 @@ package pl.byrka.uczelnia.model.mapper.impl;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
-import pl.byrka.uczelnia.model.Entity.Subject.SubjectCreate;
+import pl.byrka.uczelnia.model.DTO.Subject.SubjectCreate;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
 import pl.byrka.uczelnia.model.mapper.LecturerMapper;
 import pl.byrka.uczelnia.model.mapper.SubjectMapper;

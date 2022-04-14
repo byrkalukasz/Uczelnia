@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.exception.UczelniaException;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
-import pl.byrka.uczelnia.model.Entity.Subject.SubjectCreate;
+import pl.byrka.uczelnia.model.DTO.Subject.SubjectCreate;
 import pl.byrka.uczelnia.model.mapper.SubjectMapper;
 import pl.byrka.uczelnia.repository.Lecturer.LecturerRepository;
 import pl.byrka.uczelnia.repository.Subject.SubjectRepository;
