@@ -1,5 +1,6 @@
 package pl.byrka.uczelnia.controller.FileController;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,11 @@ public class DocumentController {
     public DocumentController(FileService fileService) {
         this.fileService = fileService;
     }
+
     @PostMapping("/upload")
+    @ApiOperation(value = "Upload new document to database",
+    notes = "Saving new document to database and link with student",
+    response = ResponseMessage.class)
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam MultipartFile file, @RequestParam String type, @RequestParam long student_id){
         log.info("Entering [uploadFile]");
         try{

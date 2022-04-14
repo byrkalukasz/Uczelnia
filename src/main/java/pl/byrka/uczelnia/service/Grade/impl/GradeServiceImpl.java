@@ -5,7 +5,6 @@ import pl.byrka.uczelnia.exception.UczelniaException;
 import pl.byrka.uczelnia.model.DTO.Grade.GradeCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Grade.GradeDTO;
 import pl.byrka.uczelnia.model.DTO.Grade.GradeUpdateDTO;
-import pl.byrka.uczelnia.model.Emuns.GradeValueEnum;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 import pl.byrka.uczelnia.model.mapper.GradeMapper;
 import pl.byrka.uczelnia.model.mapper.LecturerMapper;
@@ -19,6 +18,7 @@ import pl.byrka.uczelnia.service.Grade.GradeService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GradeServiceImpl implements GradeService {
@@ -44,23 +44,14 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public List<GradeDTO> getAllGrades() {
-        List<GradeDTO> result = new ArrayList<>();
         var response = gradeRepository.findAll();
-        for(var obj : response)
-        {
-            result.add(gradeMapper.mapFromEntity(obj));
-        }
-        return result;
+        return response.stream().map(gradeMapper::mapFromEntity).collect(Collectors.toList());
     }
 
     @Override
     public List<GradeDTO> getAllGradesForStudent(long student_id) {
-        List<GradeDTO> result = new ArrayList<>();
         var response = gradeRepository.getAllGradesForUser(student_id);
-        for(var obj : response){
-            result.add(gradeMapper.mapFromEntity(obj));
-        }
-        return result;
+        return response.stream().map(gradeMapper::mapFromEntity).collect(Collectors.toList());
     }
 
     @Override
@@ -90,12 +81,7 @@ public class GradeServiceImpl implements GradeService {
             toSave.add(save);
         }
         var response = gradeRepository.saveAll(toSave);
-        List<GradeDTO> result = new ArrayList<>();
-        for(var obj: response){
-            var save = gradeMapper.mapFromEntity(obj);
-            result.add(save);
-        }
-        return result;
+        return response.stream().map(gradeMapper::mapFromEntity).collect(Collectors.toList());
     }
 
     @Override
@@ -105,7 +91,6 @@ public class GradeServiceImpl implements GradeService {
                 () -> new UczelniaException("Grade","Id",id)
         );
 
-        //Wyciągnąć te 3 pierdoły jako osoban metoda bo ciągle używana
         var student = studentRepository.getById(gradeDTO.getStudent());
         var lecturer = lecturerRepository.getById(gradeDTO.getLecturer());
         var subject = subjectRepository.getById(gradeDTO.getSubject());
@@ -125,7 +110,6 @@ public class GradeServiceImpl implements GradeService {
     @Override
     public List<GradeDTO> updateListGrades(List<GradeUpdateDTO> GradeDTO) {
         List<GradeEntity> existingGrades = new ArrayList<>();
-        List<GradeDTO> returnGrades = new ArrayList<>();
         for(var obj : GradeDTO){
             GradeEntity gradeEntity = gradeRepository.findById(obj.getId()).orElseThrow(
                     () -> new UczelniaException("Grade","Id",obj.getId())
@@ -145,10 +129,8 @@ public class GradeServiceImpl implements GradeService {
             existingGrades.add(gradeEntity);
         }
         gradeRepository.saveAll(existingGrades);
-        for(var obj : existingGrades){
-            returnGrades.add(gradeMapper.mapFromEntity(obj));
-        }
-        return returnGrades;
+
+        return existingGrades.stream().map(gradeMapper::mapFromEntity).collect(Collectors.toList());
     }
 
     @Override

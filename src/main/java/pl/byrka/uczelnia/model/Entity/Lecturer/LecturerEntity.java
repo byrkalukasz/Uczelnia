@@ -1,8 +1,6 @@
 package pl.byrka.uczelnia.model.Entity.Lecturer;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
 
@@ -13,6 +11,9 @@ import java.util.List;
 @Setter
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Lecturer")
 public class LecturerEntity {
     @Id

@@ -17,13 +17,12 @@ public class StudentMapperImpl implements StudentMapper {
 
     @Override
     public StudentDTO mapFromEntity(StudentEntity studentEntity) {
-        StudentDTO result = new StudentDTO();
-        result.setId(studentEntity.getId());
-        result.setName(studentEntity.getName());
-        result.setSurname(studentEntity.getSurname());
-        result.setActive(studentEntity.isActive());
-
-        return result;
+        return StudentDTO.builder()
+                .id(studentEntity.getId())
+                .name(studentEntity.getName())
+                .surname(studentEntity.getSurname())
+                .active(studentEntity.isActive())
+                .build();
     }
 
     @Override

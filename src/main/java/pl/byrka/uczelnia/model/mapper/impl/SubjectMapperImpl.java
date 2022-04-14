@@ -3,7 +3,7 @@ package pl.byrka.uczelnia.model.mapper.impl;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
-import pl.byrka.uczelnia.model.Entity.Subject.SubjectCreate;
+import pl.byrka.uczelnia.model.DTO.Subject.SubjectCreate;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
 import pl.byrka.uczelnia.model.mapper.LecturerMapper;
 import pl.byrka.uczelnia.model.mapper.SubjectMapper;
@@ -18,15 +18,13 @@ public class SubjectMapperImpl implements SubjectMapper {
     @Override
     public SubjectDTO mapSubjectToDTO(SubjectEntity src)
     {
-        SubjectDTO dts = new SubjectDTO();
-
-        dts.setId(src.getId());
-        dts.setName(src.getName());
-        dts.setEcts(src.getEcts());
-        dts.setType(src.getType());
-        dts.setLecturer(lecturerMapper.mapFromEntity(src.getLecturer()));
-
-        return dts;
+        return SubjectDTO.builder()
+                .ects(src.getEcts())
+                .name(src.getName())
+                .ects(src.getEcts())
+                .type(src.getType())
+                .lecturer(lecturerMapper.mapFromEntity(src.getLecturer()))
+                .build();
     }
 
 
@@ -36,7 +34,7 @@ public class SubjectMapperImpl implements SubjectMapper {
                 .ects(src.getEcts())
                 .name(src.getName())
                 .ects(src.getEcts())
-                .type(src.getType().getTypeEnum())
+                .type(src.getType().getGrojupTypeEnum())
                 .lecturer(lecturer)
                 .build();
     }

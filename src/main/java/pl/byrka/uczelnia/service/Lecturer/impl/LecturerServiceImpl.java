@@ -1,18 +1,18 @@
 package pl.byrka.uczelnia.service.Lecturer.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.exception.UczelniaException;
 import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
-import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerCreateEntity;
+import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerCreateDTO;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
-import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerUpdateEntity;
+import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerUpdateDTO;
 import pl.byrka.uczelnia.model.mapper.LecturerMapper;
 import pl.byrka.uczelnia.repository.Lecturer.LecturerRepository;
 import pl.byrka.uczelnia.service.Lecturer.LecturerService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LecturerServiceImpl implements LecturerService {
@@ -37,7 +37,7 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
-    public LecturerDTO createLecturer(LecturerCreateEntity lecturerCreate) {
+    public LecturerDTO createLecturer(LecturerCreateDTO lecturerCreate) {
         var lecturer = lecturerMapper.mapFromCreateEntity(lecturerCreate);
         var dest = lecturerRepository.save(lecturer);
         var helper = lecturerMapper.mapFromEntity(dest);
@@ -45,20 +45,19 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
-    public LecturerDTO getLecturerFromId(long id) {
+    public Optional<LecturerDTO> getLecturerFromId(long id) {
 
-        var lecturer = lecturerRepository.getById(id);
-        var dest = lecturerMapper.mapFromEntity(lecturer);
+        var lecturer = lecturerRepository.findById(id);
+        var dest = lecturer.map(lecturerMapper::mapFromEntity);
         return dest;
     }
 
     @Override
-    public LecturerDTO updateLecturer(LecturerUpdateEntity lecturerUpdate) {
+    public LecturerDTO updateLecturer(LecturerUpdateDTO lecturerUpdate) {
         long id = lecturerUpdate.getId();
         LecturerEntity existingLecturer = lecturerRepository.findById(id).orElseThrow(
                 () -> new UczelniaException("Lecturer", "Id", id)
         );
-
         existingLecturer.setName(lecturerUpdate.getName());
         existingLecturer.setSurname(lecturerUpdate.getSurname());
         existingLecturer.setEmail(lecturerUpdate.getEmail());

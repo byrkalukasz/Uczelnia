@@ -28,28 +28,26 @@ public class GradeMapperImpl implements GradeMapper {
 
     @Override
     public GradeDTO mapFromEntity(GradeEntity gradeEntity) {
-        GradeDTO gradeDTO = new GradeDTO();
-
-        gradeDTO.setId(gradeEntity.getId());
-        gradeDTO.setGrade(GradeValueEnum.valueOf(gradeEntity.getGrade()));
-        gradeDTO.setStatus(GradeStateEnum.valueOf(gradeEntity.getStatus()));
-        gradeDTO.setLecturer(lecturerMapper.mapFromEntity(gradeEntity.getLecturer()));
-        gradeDTO.setSubject(subjectMapper.mapSubjectToDTO(gradeEntity.getSubject()));
-        gradeDTO.setStudent(studentMapper.mapFromEntity(gradeEntity.getStudent()));
-
-        return gradeDTO;
+        return GradeDTO.builder()
+                .id(gradeEntity.getId())
+                .grade(GradeValueEnum.valueOf(gradeEntity.getGrade()))
+                .status(GradeStateEnum.valueOf(gradeEntity.getStatus()))
+                .lecturer(lecturerMapper.mapFromEntity(gradeEntity.getLecturer()))
+                .subject(subjectMapper.mapSubjectToDTO(gradeEntity.getSubject()))
+                .student(studentMapper.mapFromEntity(gradeEntity.getStudent()))
+                .build();
     }
 
     @Override
     public GradeEntity mapFromDTO(GradeDTO gradeDTO) {
-        GradeEntity gradeEntity = new GradeEntity();
-        gradeEntity.setId(gradeDTO.getId());
-        gradeEntity.setGrade(gradeDTO.getGrade().getGradeValueEnum());
-        gradeEntity.setStatus(gradeDTO.getStatus().getGradeStateEnum());
-        gradeEntity.setStudent(studentMapper.mapFromDTO(gradeDTO.getStudent()));
-        gradeEntity.setLecturer(lecturerMapper.mapFromDTO(gradeDTO.getLecturer()));
-        gradeEntity.setSubject(subjectMapper.mapToEntity(gradeDTO.getSubject()));
-        return gradeEntity;
+        return GradeEntity.builder()
+                .id(gradeDTO.getId())
+                .grade(gradeDTO.getGrade().getGradeValueEnum())
+                .status(gradeDTO.getStatus().getGradeStateEnum())
+                .lecturer(lecturerMapper.mapFromDTO(gradeDTO.getLecturer()))
+                .subject(subjectMapper.mapToEntity(gradeDTO.getSubject()))
+                .student(studentMapper.mapFromDTO(gradeDTO.getStudent()))
+                .build();
     }
 
     @Override
@@ -59,12 +57,12 @@ public class GradeMapperImpl implements GradeMapper {
 
     @Override
     public GradeEntity mapCreatetoEntity(GradeCreateDTO gradeCreateDTO, LecturerEntity lecturer, SubjectEntity subject, StudentEntity student) {
-        GradeEntity gradeEntity = new GradeEntity();
-        gradeEntity.setGrade(gradeCreateDTO.getGrade().toString());
-        gradeEntity.setStatus(gradeCreateDTO.getStatus().toString());
-        gradeEntity.setStudent(student);
-        gradeEntity.setLecturer(lecturer);
-        gradeEntity.setSubject(subject);
-        return gradeEntity;
+        return GradeEntity.builder()
+                .grade(gradeCreateDTO.getGrade().getGradeValueEnum())
+                .status(gradeCreateDTO.getStatus().getGradeStateEnum())
+                .lecturer(lecturer)
+                .subject(subject)
+                .student(student)
+                .build();
     }
 }
