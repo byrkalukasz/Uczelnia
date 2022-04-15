@@ -1,5 +1,6 @@
 package pl.byrka.uczelnia.service.Student.impl;
 
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.File.DocumentDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationDTO;
+import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationMessage;
 import pl.byrka.uczelnia.model.Emuns.ApplicationStatusEnum;
 import pl.byrka.uczelnia.model.Entity.File.DocumentEntity;
 import pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity;
@@ -34,9 +36,10 @@ public class StudentApplicationImpl implements StudentApplicationService {
     private final DocumentRepository documentRepository;
     private final StudentRepository studentRepository;
     private final JmsTemplate jmsTemplate;
+    private final Gson gson;
     private String destination = "${activemq.send}";
 
-    public StudentApplicationImpl(StudentApplicationMapper studentApplicationMapper, StudentApplicationRepository studentApplicationRepository, MajorRepository majorRepository, SpecializationRepository specializationRepository, DocumentRepository documentRepository, StudentRepository studentRepository, JmsTemplate jmsTemplate) {
+    public StudentApplicationImpl(StudentApplicationMapper studentApplicationMapper, StudentApplicationRepository studentApplicationRepository, MajorRepository majorRepository, SpecializationRepository specializationRepository, DocumentRepository documentRepository, StudentRepository studentRepository, JmsTemplate jmsTemplate, Gson gson) {
         this.studentApplicationMapper = studentApplicationMapper;
         this.studentApplicationRepository = studentApplicationRepository;
         this.majorRepository = majorRepository;
@@ -44,6 +47,7 @@ public class StudentApplicationImpl implements StudentApplicationService {
         this.documentRepository = documentRepository;
         this.studentRepository = studentRepository;
         this.jmsTemplate = jmsTemplate;
+        this.gson = gson;
     }
 
     @Override
@@ -91,8 +95,9 @@ public class StudentApplicationImpl implements StudentApplicationService {
         log.info("Downloading applicants list");
         var applicants = studentApplicationRepository.findAll();
         for(var obj : applicants){
-            var send = studentApplicationMapper.mapToMessage(obj).toString();
-            jmsTemplate.convertAndSend(destination,send);
+            StudentApplicationMessage send = studentApplicationMapper.mapToMessage(obj);
+            var string = gson.toJson(send);
+            jmsTemplate.convertAndSend(destination,string);
         }
 
     }
