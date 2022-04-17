@@ -75,6 +75,8 @@ public class StudentApplicationMapperImpl implements StudentApplicationMapper {
                 .name(studentApplication.getName())
                 .surname(studentApplication.getSurname())
                 .pesel(studentApplication.getPesel())
+                .message(studentApplication.getMessage())
+                .state(studentApplication.getState())
                 .build();
     }
 }

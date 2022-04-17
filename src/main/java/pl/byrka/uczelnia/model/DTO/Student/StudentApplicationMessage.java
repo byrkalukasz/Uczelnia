@@ -14,14 +14,7 @@ public class StudentApplicationMessage implements Serializable {
     private String name;
     private String surname;
     private String pesel;
+    private String message;
+    private long state;
 
-    @Override
-    public String toString() {
-        return "{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", pesel='" + pesel + '\'' +
-                '}';
-    }
 }

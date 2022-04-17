@@ -80,6 +80,7 @@ public class StudentApplicationImpl implements StudentApplicationService {
     public StudentApplicationDTO cancelApplication(long id) {
         var application = studentApplicationRepository.getById(id);
         application.setStatus(ApplicationStatusEnum.CANCELED.toString());
+        application.setState(4);
         application.setMessage("Anulowano ręcznie");
         var updatedApplication = studentApplicationRepository.save(application);
         return studentApplicationMapper.mapFromEntity(updatedApplication);
@@ -87,30 +88,34 @@ public class StudentApplicationImpl implements StudentApplicationService {
 
     @Override
     public List<DocumentDTO> getAllDocumentsForApplicant(long id) {
-
+        //TODO
         return null;
     }
     @Scheduled(cron = "${activemq.cron.expression}")
     public void sendApplicationToValidator(){
         log.info("Downloading applicants list");
-        var applicants = studentApplicationRepository.findAll();
+        var applicants = studentApplicationRepository.getAllActiveApplicationsToSend();
         for(var obj : applicants){
             StudentApplicationMessage send = studentApplicationMapper.mapToMessage(obj);
             var string = gson.toJson(send);
             jmsTemplate.convertAndSend(destination,string);
+            //Zmiana stage na wysłany
+            obj.setState(1);
+            studentApplicationRepository.save(obj);
         }
-
     }
     @JmsListener(destination = "${activemq.receive}")
     public void reviceStudentApplications(StudentApplicationEntity studentApplication){
         log.info("Reciving studentApplication");
+        var application = studentApplicationRepository.getById(studentApplication.getId());
+        application.setMessage(studentApplication.getMessage());
+        application.setState(studentApplication.getState());
+        studentApplicationRepository.save(application);
     }
     @Scheduled(cron = "${cron.expression}")
     public void checkStudentApplications(){
         log.info("Downloading applicants list");
-        //Sprawdzenie czy istnieją jakies aplikacje
-        var applicants = studentApplicationRepository.getAllActiveApplications("NEW");
-        //jeżeli istnieją sprawdz czy mają dokumenty
+        var applicants = studentApplicationRepository.getAllActiveApplicationsToProcess("NEW");
         for(var id : applicants){
             log.info("Checking application ID : " + id);
             var documentsForApplication = documentRepository.getAllDocumentsForApplication(id);
@@ -166,7 +171,7 @@ public class StudentApplicationImpl implements StudentApplicationService {
             count++;
             application.setCount(count.toString());
         }
-        var updatedApplication = studentApplicationRepository.save(application);
+        studentApplicationRepository.save(application);
     }
     private void createStudent(long id){
         var applicant = studentApplicationRepository.getById(id);
@@ -181,6 +186,9 @@ public class StudentApplicationImpl implements StudentApplicationService {
         applicant.setMessage("Pomyślnie utworzono studenta");
         applicant.setStatus(ApplicationStatusEnum.DONE.toString());
         studentApplicationRepository.save(applicant);
+    }
+    private void setApplicationStage(long id, long stage){
+
     }
     //Czemu w tej metodzie nie aktualizuje się status hmm....
     private void cancelApplicationByScheduler(long id, String message){
