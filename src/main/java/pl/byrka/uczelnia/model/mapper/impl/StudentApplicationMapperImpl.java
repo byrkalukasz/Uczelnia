@@ -3,6 +3,7 @@ package pl.byrka.uczelnia.model.mapper.impl;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationDTO;
+import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationMessage;
 import pl.byrka.uczelnia.model.Emuns.ApplicationStatusEnum;
 import pl.byrka.uczelnia.model.Entity.Major.MajorEntity;
 import pl.byrka.uczelnia.model.Entity.Specjalization.SpecializationEntity;
@@ -64,6 +65,18 @@ public class StudentApplicationMapperImpl implements StudentApplicationMapper {
                 .status(src.getStatus().toString())
                 .surname(src.getSurname())
                 .state(0)
+                .build();
+    }
+
+    @Override
+    public StudentApplicationMessage mapToMessage(StudentApplicationEntity studentApplication) {
+        return StudentApplicationMessage.builder()
+                .id(studentApplication.getId())
+                .name(studentApplication.getName())
+                .surname(studentApplication.getSurname())
+                .pesel(studentApplication.getPesel())
+                .message(studentApplication.getMessage())
+                .state(studentApplication.getState())
                 .build();
     }
 }

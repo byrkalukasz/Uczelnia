@@ -1,14 +1,18 @@
 package pl.byrka.uczelnia.service.Student.impl;
 
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jms.annotation.JmsListener;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.File.DocumentDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationDTO;
-import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
+import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationMessage;
 import pl.byrka.uczelnia.model.Emuns.ApplicationStatusEnum;
 import pl.byrka.uczelnia.model.Entity.File.DocumentEntity;
+import pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity;
 import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 import pl.byrka.uczelnia.model.mapper.StudentApplicationMapper;
 import pl.byrka.uczelnia.repository.File.DocumentRepository;
@@ -31,14 +35,19 @@ public class StudentApplicationImpl implements StudentApplicationService {
     private final SpecializationRepository specializationRepository;
     private final DocumentRepository documentRepository;
     private final StudentRepository studentRepository;
+    private final JmsTemplate jmsTemplate;
+    private final Gson gson;
+    private String destination = "${activemq.send}";
 
-    public StudentApplicationImpl(StudentApplicationMapper studentApplicationMapper, StudentApplicationRepository studentApplicationRepository, MajorRepository majorRepository, SpecializationRepository specializationRepository, DocumentRepository documentRepository, StudentRepository studentRepository) {
+    public StudentApplicationImpl(StudentApplicationMapper studentApplicationMapper, StudentApplicationRepository studentApplicationRepository, MajorRepository majorRepository, SpecializationRepository specializationRepository, DocumentRepository documentRepository, StudentRepository studentRepository, JmsTemplate jmsTemplate, Gson gson) {
         this.studentApplicationMapper = studentApplicationMapper;
         this.studentApplicationRepository = studentApplicationRepository;
         this.majorRepository = majorRepository;
         this.specializationRepository = specializationRepository;
         this.documentRepository = documentRepository;
         this.studentRepository = studentRepository;
+        this.jmsTemplate = jmsTemplate;
+        this.gson = gson;
     }
 
     @Override
@@ -71,6 +80,7 @@ public class StudentApplicationImpl implements StudentApplicationService {
     public StudentApplicationDTO cancelApplication(long id) {
         var application = studentApplicationRepository.getById(id);
         application.setStatus(ApplicationStatusEnum.CANCELED.toString());
+        application.setState(4);
         application.setMessage("Anulowano ręcznie");
         var updatedApplication = studentApplicationRepository.save(application);
         return studentApplicationMapper.mapFromEntity(updatedApplication);
@@ -78,15 +88,35 @@ public class StudentApplicationImpl implements StudentApplicationService {
 
     @Override
     public List<DocumentDTO> getAllDocumentsForApplicant(long id) {
-
+        //TODO
         return null;
+    }
+    @Scheduled(cron = "${activemq.cron.expression}")
+    public void sendApplicationToValidator(){
+        log.info("Downloading applicants list for send");
+        var applicants = studentApplicationRepository.getAllActiveApplicationsToSend();
+        for(var obj : applicants){
+            StudentApplicationMessage send = studentApplicationMapper.mapToMessage(obj);
+            var string = gson.toJson(send);
+            jmsTemplate.convertAndSend(destination,string);
+            //Zmiana stage na wysłany
+            obj.setState(1);
+            studentApplicationRepository.save(obj);
+        }
+    }
+    @JmsListener(destination = "${activemq.receive}")
+    public void reviceStudentApplications(String studentApplication){
+        log.info("Reciving studentApplication");
+        var model = gson.fromJson(studentApplication,StudentApplicationMessage.class);
+        var application = studentApplicationRepository.getById(model.getId());
+        application.setMessage(model.getMessage());
+        application.setState(model.getState());
+        studentApplicationRepository.save(application);
     }
     @Scheduled(cron = "${cron.expression}")
     public void checkStudentApplications(){
-        log.info("Downloading applicants list");
-        //Sprawdzenie czy istnieją jakies aplikacje
-        var applicants = studentApplicationRepository.getAllActiveApplications("NEW");
-        //jeżeli istnieją sprawdz czy mają dokumenty
+        log.info("Downloading applicants list for checking");
+        var applicants = studentApplicationRepository.getAllActiveApplicationsToProcess("NEW");
         for(var id : applicants){
             log.info("Checking application ID : " + id);
             var documentsForApplication = documentRepository.getAllDocumentsForApplication(id);
@@ -109,6 +139,7 @@ public class StudentApplicationImpl implements StudentApplicationService {
         application.setStatus(ApplicationStatusEnum.NEW.toString());
         application.setCount("0");
         application.setMessage(null);
+        application.setState(0);
         studentApplicationRepository.save(application);
     }
 
@@ -136,13 +167,14 @@ public class StudentApplicationImpl implements StudentApplicationService {
             log.info("Canceled application with ID : " + id);
             application.setMessage("Aplikacja anulowana automatycznie, brak wymaganych dokumentów");
             application.setStatus(ApplicationStatusEnum.CANCELED.toString());
+            application.setState(4);
             //Czemu to nie działa???
             //cancelApplicationByScheduler(id, "Aplikacja anulowana automatycznie, brak wymaganych dokumentów");
         }else{
             count++;
             application.setCount(count.toString());
         }
-        var updatedApplication = studentApplicationRepository.save(application);
+        studentApplicationRepository.save(application);
     }
     private void createStudent(long id){
         var applicant = studentApplicationRepository.getById(id);
@@ -157,6 +189,9 @@ public class StudentApplicationImpl implements StudentApplicationService {
         applicant.setMessage("Pomyślnie utworzono studenta");
         applicant.setStatus(ApplicationStatusEnum.DONE.toString());
         studentApplicationRepository.save(applicant);
+    }
+    private void setApplicationStage(long id, long stage){
+
     }
     //Czemu w tej metodzie nie aktualizuje się status hmm....
     private void cancelApplicationByScheduler(long id, String message){
