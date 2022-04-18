@@ -55,7 +55,7 @@ public class GroupMapperImpl implements GroupMapper {
                 .specialization(specializationMapper.mapFromDTO(src.specialization))
                 .StartYear(src.getStartYear())
                 .subject(subjectMapper.mapToEntity(src.subject))
-                .type(src.getType().getGrojupTypeEnum())
+                .type(src.getType().getGrooupTypeEnum())
                 .build();
     }
 }

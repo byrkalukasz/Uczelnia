@@ -34,7 +34,7 @@ public class SubjectMapperImpl implements SubjectMapper {
                 .ects(src.getEcts())
                 .name(src.getName())
                 .ects(src.getEcts())
-                .type(src.getType().getGrojupTypeEnum())
+                .type(src.getType().getGrooupTypeEnum())
                 .lecturer(lecturer)
                 .build();
     }

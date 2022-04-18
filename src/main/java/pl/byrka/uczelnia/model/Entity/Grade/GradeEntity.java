@@ -20,19 +20,19 @@ import javax.persistence.*;
 public class GradeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private long id;
     @Column(name = "grade", nullable = false)
-    public String grade;
+    private String grade;
     @Column(name = "status", nullable = false)
-    public String status;
+    private String status;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id", referencedColumnName = "id")
-    public StudentEntity student;
+    private StudentEntity student;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
-    public SubjectEntity subject;
+    private SubjectEntity subject;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lecturer_id", referencedColumnName = "id")
-    public LecturerEntity lecturer;
+    private LecturerEntity lecturer;
 }

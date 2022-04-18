@@ -1,10 +1,10 @@
 package pl.byrka.uczelnia.model.Emuns;
 
 public enum GradeStateEnum {
-    Robocza("Robocza"),
-    Wpisana("Wpisana"),
-    Zatwierdzona("Zatwierdzona"),
-    Anulowana("Anulowana");
+    ROBOCZA("Robocza"),
+    WPISANA("Wpisana"),
+    ZATWIERDZONA("Zatwierdzona"),
+    ANULOWANA("Anulowana");
 
     private String grade;
 

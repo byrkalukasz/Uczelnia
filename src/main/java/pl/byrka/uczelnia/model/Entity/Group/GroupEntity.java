@@ -22,30 +22,30 @@ import java.util.List;
 public class GroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private long id;
     @Column(name = "FullName",nullable = false)
-    public String fullName;
+    private String fullName;
     @Column(name = "ShortName", nullable = false)
-    public String shortName;
+    private String shortName;
     @Column(name = "StartYear", nullable = false)
-    public String StartYear;
+    private String StartYear;
     @Column(name = "type", nullable = false)
-    public String type;
+    private String type;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "major_id", referencedColumnName = "id", nullable = true)
-    public MajorEntity major;
+    private MajorEntity major;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = true)
-    public SpecializationEntity specialization;
+    private SpecializationEntity specialization;
     @Column(name = "learningSchedule", nullable = false)
-    public String learningSchedule;
+    private String learningSchedule;
     @Column(name = "learningType", nullable = false)
-    public String learningType;
+    private String learningType;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subject_id", referencedColumnName = "id", nullable = true)
-    public SubjectEntity subject;
+    private SubjectEntity subject;
     @Column(name = "maxStudentCount", nullable = false)
-    public int maxStudentCount;
+    private int maxStudentCount;
 
     @ManyToMany(mappedBy = "group")
     private List<StudentGroupEntity> studentGroup;

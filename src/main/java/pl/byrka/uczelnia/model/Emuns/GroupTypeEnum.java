@@ -32,7 +32,7 @@ public enum GroupTypeEnum {
         return byType.get(e);
     }
     @JsonValue
-    public String getGrojupTypeEnum() {
+    public String getGrooupTypeEnum() {
         return GroupType;
     }
 }

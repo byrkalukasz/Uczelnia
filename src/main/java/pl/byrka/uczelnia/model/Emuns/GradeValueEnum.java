@@ -8,13 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum GradeValueEnum {
-    ndst("Niedostateczna"),
-    dst("Dostateczna"),
-    dstp("Dostateczna plus"),
-    db("Dobry"),
-    dbp("Dobry Plus"),
-    bdb("Bardzo dobry"),
-    bdbp("Bardzo dobry plus");
+    NDST("Niedostateczna"),
+    DST("Dostateczna"),
+    DSTP("Dostateczna plus"),
+    DB("Dobry"),
+    DBP("Dobry Plus"),
+    BDB("Bardzo dobry"),
+    BDBP("Bardzo dobry plus");
 
     private final String grade;
 

@@ -19,11 +19,11 @@ import java.util.List;
 public class SpecializationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private long id;
     @Column(name = "name", nullable = false)
-    public String name;
+    private String name;
     @Column(name = "active", nullable = false)
-    public boolean active;
+    private boolean active;
 
     @ManyToMany(mappedBy = "specialization")
     private List<GroupEntity> group;
