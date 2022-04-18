@@ -6,9 +6,8 @@ import pl.byrka.uczelnia.model.Entity.Specjalization.SpecializationEntity;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
+import java.io.Serializable;
 
-//Dodano @Transactional ponieważ:
-//org.hibernate.LazyInitializationException: could not initialize proxy [pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity#3] - no Session
 @Getter
 @Setter
 @Entity
@@ -17,13 +16,15 @@ import javax.transaction.Transactional;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "student_application")
-public class StudentApplicationEntity {
+public class StudentApplicationEntity implements Serializable {
     /*
     Możliwe wartości pola state - aktualnie nie używane przez brak kolejki do wymiany danych
     0 - Utworzona
     1 - Wysłana do weryfikacji
-    2 - odebrana odpowiedz
+    2 - odebrana odpowiedz pozytywna
     3 - Przeprocesowana
+    4 - Anulowana
+    5 - Anulowana z weryfikatora
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
