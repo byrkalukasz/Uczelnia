@@ -10,8 +10,8 @@ import pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity;
 import java.util.List;
 
 public interface StudentApplicationRepository extends JpaRepository<StudentApplicationEntity, Long> {
-    String getAllActiveApplications = "SELECT s.id FROM StudentApplicationEntity s WHERE s.status = :status AND s.stage = 1";
-    String getAllActiveApplicationsToSend = "SELECT s FROM StudentApplicationEntity s WHERE s.status = NEW AND s.stage = 0";
+    String getAllActiveApplications = "SELECT s.id FROM StudentApplicationEntity s WHERE s.status = :status AND s.state = 2";
+    String getAllActiveApplicationsToSend = "SELECT s FROM StudentApplicationEntity s WHERE s.status = 'NEW' AND s.state = 0";
 
     @Query(getAllActiveApplications)
     List<Long> getAllActiveApplicationsToProcess(@Param("status") String type);

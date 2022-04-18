@@ -93,7 +93,7 @@ public class StudentApplicationImpl implements StudentApplicationService {
     }
     @Scheduled(cron = "${activemq.cron.expression}")
     public void sendApplicationToValidator(){
-        log.info("Downloading applicants list");
+        log.info("Downloading applicants list for send");
         var applicants = studentApplicationRepository.getAllActiveApplicationsToSend();
         for(var obj : applicants){
             StudentApplicationMessage send = studentApplicationMapper.mapToMessage(obj);
@@ -105,16 +105,17 @@ public class StudentApplicationImpl implements StudentApplicationService {
         }
     }
     @JmsListener(destination = "${activemq.receive}")
-    public void reviceStudentApplications(StudentApplicationEntity studentApplication){
+    public void reviceStudentApplications(String studentApplication){
         log.info("Reciving studentApplication");
-        var application = studentApplicationRepository.getById(studentApplication.getId());
-        application.setMessage(studentApplication.getMessage());
-        application.setState(studentApplication.getState());
+        var model = gson.fromJson(studentApplication,StudentApplicationMessage.class);
+        var application = studentApplicationRepository.getById(model.getId());
+        application.setMessage(model.getMessage());
+        application.setState(model.getState());
         studentApplicationRepository.save(application);
     }
     @Scheduled(cron = "${cron.expression}")
     public void checkStudentApplications(){
-        log.info("Downloading applicants list");
+        log.info("Downloading applicants list for checking");
         var applicants = studentApplicationRepository.getAllActiveApplicationsToProcess("NEW");
         for(var id : applicants){
             log.info("Checking application ID : " + id);
@@ -138,6 +139,7 @@ public class StudentApplicationImpl implements StudentApplicationService {
         application.setStatus(ApplicationStatusEnum.NEW.toString());
         application.setCount("0");
         application.setMessage(null);
+        application.setState(0);
         studentApplicationRepository.save(application);
     }
 
@@ -165,6 +167,7 @@ public class StudentApplicationImpl implements StudentApplicationService {
             log.info("Canceled application with ID : " + id);
             application.setMessage("Aplikacja anulowana automatycznie, brak wymaganych dokumentów");
             application.setStatus(ApplicationStatusEnum.CANCELED.toString());
+            application.setState(4);
             //Czemu to nie działa???
             //cancelApplicationByScheduler(id, "Aplikacja anulowana automatycznie, brak wymaganych dokumentów");
         }else{
