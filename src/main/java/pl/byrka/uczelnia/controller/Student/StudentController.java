@@ -22,8 +22,9 @@ public class StudentController {
     @GetMapping("{id}")
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable("id") long id){
         log.info("Entering [getStudentById] with ID = {}", id);
-        var result = studentService.getStudentById(id);
-        return ResponseEntity.ok(result);
+        return studentService.getStudentById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
     @GetMapping
     public ResponseEntity<List<StudentDTO>> getAllStudents(){
@@ -37,9 +38,12 @@ public class StudentController {
         return ResponseEntity.ok(response);
     }
     @PutMapping
-    public ResponseEntity<StudentDTO> updateStuden(@RequestBody  StudentDTO studentDTO) {
-        var response = studentService.updateStudent(studentDTO);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<StudentDTO> updateStudent(@RequestBody  StudentDTO studentDTO) {
+        log.info("Entering [updateStudent]");
+        log.debug("Student to update: " + studentDTO.toString());
+        return studentService.updateStudent(studentDTO)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
     @PostMapping
     public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentCreateDTO studentCreateDTO){

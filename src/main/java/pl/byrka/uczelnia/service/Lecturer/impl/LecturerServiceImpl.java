@@ -1,5 +1,6 @@
 package pl.byrka.uczelnia.service.Lecturer.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.exception.UczelniaException;
 import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class LecturerServiceImpl implements LecturerService {
     private LecturerRepository lecturerRepository;
@@ -47,8 +49,8 @@ public class LecturerServiceImpl implements LecturerService {
     public Optional<LecturerDTO> getLecturerFromId(long id) {
 
         var lecturer = lecturerRepository.findById(id);
-        var dest = lecturer.map(lecturerMapper::mapFromEntity);
-        return dest;
+        log.debug("Find lecturer " + lecturer.toString());
+        return lecturer.map(lecturerMapper::mapFromEntity);
     }
 
     @Override
@@ -57,15 +59,14 @@ public class LecturerServiceImpl implements LecturerService {
         LecturerEntity existingLecturer = lecturerRepository.findById(id).orElseThrow(
                 () -> new UczelniaException("Lecturer", "Id", id)
         );
+        log.debug("Find lecturer " + existingLecturer.toString());
         existingLecturer.setName(lecturerUpdate.getName());
         existingLecturer.setSurname(lecturerUpdate.getSurname());
         existingLecturer.setEmail(lecturerUpdate.getEmail());
         existingLecturer.setTitle(lecturerUpdate.getTitle());
-
+        log.debug("Update lecturer " + existingLecturer.toString());
         lecturerRepository.save(existingLecturer);
-
         var dst = lecturerMapper.mapFromEntity(existingLecturer);
-
         return Optional.of(dst);
 
     }

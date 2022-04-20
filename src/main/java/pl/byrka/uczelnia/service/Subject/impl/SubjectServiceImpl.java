@@ -12,6 +12,7 @@ import pl.byrka.uczelnia.service.Subject.SubjectService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -47,15 +48,9 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public SubjectDTO getSubjectById(long id) {
-        try {
-            var response = subjectRepository.getById(id);
-            var result = subjectMapper.mapSubjectToDTO(response);
-
-            return result;
-        } catch (Exception e) {
-            throw new UczelniaException("Subject","ID",id);
-        }
+    public Optional<SubjectDTO> getSubjectById(long id) {
+        var lecturer = subjectRepository.findById(id);
+        return lecturer.map(subjectMapper::mapSubjectToDTO);
     }
 
     @Override

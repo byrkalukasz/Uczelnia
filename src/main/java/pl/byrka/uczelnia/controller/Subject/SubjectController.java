@@ -34,9 +34,9 @@ public class SubjectController {
     public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable("id") long id)
     {
         log.info("Entering [getLecturerById] with ID = {}", id);
-        var response = subjectService.getSubjectById(id);
-        log.info("Getting response with subject ID = : {}", response.getId());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return subjectService.getSubjectById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
     @GetMapping(value = "/byLecturer/{lecturerId}")
     public ResponseEntity<List<SubjectDTO>> getAllSubjectByLecturer(@PathVariable("lecturerId") long id)

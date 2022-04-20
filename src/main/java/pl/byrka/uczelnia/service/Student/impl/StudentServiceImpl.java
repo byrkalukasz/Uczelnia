@@ -11,6 +11,7 @@ import pl.byrka.uczelnia.service.Student.StudentService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -23,9 +24,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDTO getStudentById(long id) {
-        var response = studentRepository.getById(id);
-        return studentMapper.mapFromEntity(response);
+    public Optional<StudentDTO> getStudentById(long id) {
+        var response = studentRepository.findById(id);
+        return response.map(studentMapper::mapFromEntity);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDTO updateStudent(StudentDTO studentDTO) {
+    public Optional<StudentDTO> updateStudent(StudentDTO studentDTO) {
         StudentEntity existingStudent = studentRepository.findById(studentDTO.getId())
                 .orElseThrow(() -> new UczelniaException("Student","id", studentDTO.getId())
                 );
@@ -54,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
         existingStudent.setSurname(studentDTO.getSurname());
         existingStudent.setActive(studentDTO.isActive());
 
-        return studentMapper.mapFromEntity(studentRepository.save(existingStudent));
+        return Optional.of(studentMapper.mapFromEntity(existingStudent));
     }
 
     @Override
