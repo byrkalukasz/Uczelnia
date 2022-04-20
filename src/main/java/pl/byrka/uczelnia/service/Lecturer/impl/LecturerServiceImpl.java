@@ -37,11 +37,10 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
-    public LecturerDTO createLecturer(LecturerCreateDTO lecturerCreate) {
+    public Optional<LecturerDTO> createLecturer(LecturerCreateDTO lecturerCreate) {
         var lecturer = lecturerMapper.mapFromCreateEntity(lecturerCreate);
         var dest = lecturerRepository.save(lecturer);
-        var helper = lecturerMapper.mapFromEntity(dest);
-        return helper;
+        return Optional.of(lecturerMapper.mapFromEntity(dest));
     }
 
     @Override
@@ -53,7 +52,7 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
-    public LecturerDTO updateLecturer(LecturerUpdateDTO lecturerUpdate) {
+    public Optional<LecturerDTO> updateLecturer(LecturerUpdateDTO lecturerUpdate) {
         long id = lecturerUpdate.getId();
         LecturerEntity existingLecturer = lecturerRepository.findById(id).orElseThrow(
                 () -> new UczelniaException("Lecturer", "Id", id)
@@ -67,7 +66,7 @@ public class LecturerServiceImpl implements LecturerService {
 
         var dst = lecturerMapper.mapFromEntity(existingLecturer);
 
-        return dst;
+        return Optional.of(dst);
 
     }
 }
