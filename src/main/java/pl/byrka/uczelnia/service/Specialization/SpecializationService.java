@@ -4,10 +4,11 @@ import pl.byrka.uczelnia.model.DTO.Specialization.SpecializationCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Specialization.SpecializationDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SpecializationService {
     List<SpecializationDTO> getAllSpecializations();
-    SpecializationDTO getSpecializationById(long id);
-    SpecializationDTO addSpecialization(SpecializationCreateDTO specializationCreateDTO);
-    SpecializationDTO updateSpecialization(SpecializationDTO specializationDTO);
+    Optional<SpecializationDTO> getSpecializationById(long id);
+    Optional<SpecializationDTO> addSpecialization(SpecializationCreateDTO specializationCreateDTO);
+    Optional<SpecializationDTO> updateSpecialization(SpecializationDTO specializationDTO);
 }

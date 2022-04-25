@@ -38,7 +38,7 @@ public class StudentController {
         return ResponseEntity.ok(response);
     }
     @PutMapping
-    public ResponseEntity<StudentDTO> updateStudent(@RequestBody  StudentDTO studentDTO) {
+    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO) {
         log.info("Entering [updateStudent]");
         log.debug("Student to update: " + studentDTO.toString());
         return studentService.updateStudent(studentDTO)

@@ -22,9 +22,9 @@ public class SpecializationController {
     }
     @GetMapping("{id}")
     public ResponseEntity<SpecializationDTO> getSpecializationById(@PathVariable("id") long id){
-        log.info("Entering [getSpecializationById] with ID = {}", id);
-        var result = specializationService.getSpecializationById(id);
-        return ResponseEntity.ok(result);
+        return specializationService.getSpecializationById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
     @GetMapping
     public ResponseEntity<List<SpecializationDTO>> getAllSpecialization(){
@@ -35,7 +35,8 @@ public class SpecializationController {
     @PostMapping
     public ResponseEntity<SpecializationDTO> createSpecialization(@RequestBody SpecializationCreateDTO specializationCreateDTO){
         log.info("Entering [createSpecialization]");
-        var result = specializationService.addSpecialization(specializationCreateDTO);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        return specializationService.addSpecialization(specializationCreateDTO)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

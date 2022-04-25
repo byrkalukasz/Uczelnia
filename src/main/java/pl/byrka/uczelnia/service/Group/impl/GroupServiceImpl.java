@@ -62,13 +62,16 @@ public class GroupServiceImpl implements GroupService {
         //4. Dopisanie studentów do grupy
     }
     private void creteLabGroup(String year, long maxStudentCount){
-        //1. Pobranie listy majorów z roku
-        //2. Sprawdzenie czy nie ma grupy dla majora w konkretnym roku
-        //3. utworzenei grupy dla majowa
-        //4. Dopisanie studentów do grupy
+        //1. Pobranie listy specjalizaji z roku
+        //2. Sprawdzenie czy nie ma grupy dla specjalizaji w konkretnym roku
+        //3. Pobieraj listę studentów dla któych tworzysz grupę
+        //4. Podziel liczbę studentó na max liczbę osób w grupie
+        //5. Utworz grupę
+        //6. Dopisz studentów do grupy
+        //7. Jeżeli są studenci bez grup idz do punktu 5
     }
     private void addStudentToGroup(List<Long> studentList, long group){
-        //Dla każdego elementu z listy studentó dodaj rekord
+        //Dla każdego elementu z listy studentów dodaj rekord
 
     }
 
