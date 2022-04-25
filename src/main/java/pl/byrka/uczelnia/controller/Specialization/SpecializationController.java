@@ -9,6 +9,7 @@ import pl.byrka.uczelnia.model.DTO.Specialization.SpecializationDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentDTO;
 import pl.byrka.uczelnia.service.Specialization.SpecializationService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -33,7 +34,7 @@ public class SpecializationController {
         return ResponseEntity.ok(result);
     }
     @PostMapping
-    public ResponseEntity<SpecializationDTO> createSpecialization(@RequestBody SpecializationCreateDTO specializationCreateDTO){
+    public ResponseEntity<SpecializationDTO> createSpecialization(@Valid @RequestBody SpecializationCreateDTO specializationCreateDTO){
         log.info("Entering [createSpecialization]");
         return specializationService.addSpecialization(specializationCreateDTO)
                 .map(ResponseEntity::ok)

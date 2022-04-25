@@ -9,6 +9,7 @@ import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectCreate;
 import pl.byrka.uczelnia.service.Subject.SubjectService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -46,7 +47,7 @@ public class SubjectController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<SubjectDTO> createSubject(@RequestBody SubjectCreate create)
+    public ResponseEntity<SubjectDTO> createSubject(@Valid @RequestBody SubjectCreate create)
     {
         log.info("Entering [createSubject]");
         var response = subjectService.createNewSubject(create);

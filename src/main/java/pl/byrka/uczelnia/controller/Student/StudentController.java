@@ -8,6 +8,7 @@ import pl.byrka.uczelnia.model.DTO.Student.StudentDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
 import pl.byrka.uczelnia.service.Student.StudentService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -38,7 +39,7 @@ public class StudentController {
         return ResponseEntity.ok(response);
     }
     @PutMapping
-    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO) {
+    public ResponseEntity<StudentDTO> updateStudent(@Valid @RequestBody StudentDTO studentDTO) {
         log.info("Entering [updateStudent]");
         log.debug("Student to update: " + studentDTO.toString());
         return studentService.updateStudent(studentDTO)
@@ -46,7 +47,7 @@ public class StudentController {
                 .orElse(ResponseEntity.notFound().build());
     }
     @PostMapping
-    public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentCreateDTO studentCreateDTO){
+    public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentCreateDTO studentCreateDTO){
         log.info("Entering [creatingStudent]");
         var result = studentService.addStudent(studentCreateDTO);
         log.info("Created student with ID = {}", result.getId());

@@ -11,6 +11,7 @@ import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerUpdateDTO;
 import pl.byrka.uczelnia.service.Lecturer.LecturerService;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +44,7 @@ public class LecturerController {
         return new ResponseEntity<List<LecturerDTO>>(lecturersList,HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<LecturerDTO> createLecturer(@RequestBody LecturerCreateDTO lecturerCreate)
+    public ResponseEntity<LecturerDTO> createLecturer(@Valid @RequestBody LecturerCreateDTO lecturerCreate)
     {
         log.info("Create Lecturer");
         return lecturerService.createLecturer(lecturerCreate)
@@ -51,7 +52,7 @@ public class LecturerController {
                 .orElse(ResponseEntity.notFound().build());
     }
     @PutMapping
-    public ResponseEntity<LecturerDTO> updateLecturer(@RequestBody LecturerUpdateDTO lecturerUpdate)
+    public ResponseEntity<LecturerDTO> updateLecturer(@Valid @RequestBody LecturerUpdateDTO lecturerUpdate)
     {
         log.info("Update Lecturer");
         return lecturerService.updateLecturer(lecturerUpdate)

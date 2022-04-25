@@ -10,6 +10,7 @@ import pl.byrka.uczelnia.model.DTO.Grade.GradeUpdateDTO;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 import pl.byrka.uczelnia.service.Grade.GradeService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -36,25 +37,25 @@ public class GradeController {
         return ResponseEntity.ok(result);
     }
     @PostMapping(value = "/add/grade")
-    public ResponseEntity<GradeDTO> addNewGrade(@RequestBody GradeCreateDTO gradeDTO){
+    public ResponseEntity<GradeDTO> addNewGrade(@Valid @RequestBody GradeCreateDTO gradeDTO){
         log.info("Entering [addNewGrade]");
         var result = gradeService.createGrade(gradeDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
     @PostMapping(value = "/add/grades")
-    public ResponseEntity<List<GradeDTO>> addListGrades(@RequestBody List<GradeCreateDTO> gradeDTOList){
+    public ResponseEntity<List<GradeDTO>> addListGrades(@Valid @RequestBody List<GradeCreateDTO> gradeDTOList){
         log.info("Entering [addListGrades]");
         var result = gradeService.createListGrades(gradeDTOList);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
     @PutMapping(value = "/update/grade")
-    public ResponseEntity<GradeDTO> updateGrade(@RequestBody GradeUpdateDTO gradeDTO){
+    public ResponseEntity<GradeDTO> updateGrade(@Valid @RequestBody GradeUpdateDTO gradeDTO){
         log.info("Entering [updateGrade]");
         var result = gradeService.updateGrade(gradeDTO);
         return ResponseEntity.ok(result);
     }
     @PutMapping(value = "/update/grades")
-    public ResponseEntity<List<GradeDTO>> updateListGrade(@RequestBody List<GradeUpdateDTO> gradeDTOList){
+    public ResponseEntity<List<GradeDTO>> updateListGrade(@Valid @RequestBody List<GradeUpdateDTO> gradeDTOList){
         log.info("Entering [updateListGrade]");
         log.info("Grades to upgrade: " + gradeDTOList.size());
         var ressult = gradeService.updateListGrades(gradeDTOList);
