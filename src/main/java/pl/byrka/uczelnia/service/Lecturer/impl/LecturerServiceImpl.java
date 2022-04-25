@@ -49,7 +49,7 @@ public class LecturerServiceImpl implements LecturerService {
     public Optional<LecturerDTO> getLecturerFromId(long id) {
 
         var lecturer = lecturerRepository.findById(id);
-        log.debug("Find lecturer " + lecturer.toString());
+        log.info("Find lecturer " + lecturer.toString());
         return lecturer.map(lecturerMapper::mapFromEntity);
     }
 
@@ -59,12 +59,12 @@ public class LecturerServiceImpl implements LecturerService {
         LecturerEntity existingLecturer = lecturerRepository.findById(id).orElseThrow(
                 () -> new UczelniaException("Lecturer", "Id", id)
         );
-        log.debug("Find lecturer " + existingLecturer.toString());
+        log.info("Find lecturer " + existingLecturer.toString());
         existingLecturer.setName(lecturerUpdate.getName());
         existingLecturer.setSurname(lecturerUpdate.getSurname());
         existingLecturer.setEmail(lecturerUpdate.getEmail());
         existingLecturer.setTitle(lecturerUpdate.getTitle());
-        log.debug("Update lecturer " + existingLecturer.toString());
+        log.info("Update lecturer " + existingLecturer.toString());
         lecturerRepository.save(existingLecturer);
         var dst = lecturerMapper.mapFromEntity(existingLecturer);
         return Optional.of(dst);

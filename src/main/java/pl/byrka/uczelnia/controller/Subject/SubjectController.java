@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
-import pl.byrka.uczelnia.model.DTO.Subject.SubjectCreate;
 import pl.byrka.uczelnia.service.Subject.SubjectService;
 
 import javax.validation.Valid;
@@ -47,13 +46,12 @@ public class SubjectController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<SubjectDTO> createSubject(@Valid @RequestBody SubjectCreate create)
+    public ResponseEntity<SubjectDTO> createSubject(@Valid @RequestBody SubjectDTO create)
     {
         log.info("Entering [createSubject]");
-        var response = subjectService.createNewSubject(create);
-        log.info("Created subject with ID = {}", response.getId());
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return subjectService.createNewSubject(create)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.internalServerError().build());
     }
 
 }

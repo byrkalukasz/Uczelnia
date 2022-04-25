@@ -2,6 +2,7 @@ package pl.byrka.uczelnia.model.DTO.Subject;
 
 import lombok.*;
 import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
+import pl.byrka.uczelnia.model.Emuns.GroupTypeEnum;
 
 @Getter
 @Setter
@@ -9,9 +10,9 @@ import pl.byrka.uczelnia.model.DTO.Lecturer.LecturerDTO;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubjectDTO {
-    public long id;
+    public Long id;
     public String name;
     public int ects;
-    public String type;
+    public GroupTypeEnum type;
     public LecturerDTO lecturer;
 }

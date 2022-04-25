@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.exception.UczelniaException;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
-import pl.byrka.uczelnia.model.DTO.Subject.SubjectCreate;
 import pl.byrka.uczelnia.model.mapper.SubjectMapper;
 import pl.byrka.uczelnia.repository.Lecturer.LecturerRepository;
 import pl.byrka.uczelnia.repository.Subject.SubjectRepository;
@@ -39,12 +38,14 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public SubjectDTO createNewSubject(SubjectCreate subjectCreate) {
-        var lecturer = lecturerRepository.getById(subjectCreate.getLecturer());
+    public Optional<SubjectDTO> createNewSubject(SubjectDTO subjectCreate) {
+        if(subjectCreate.getId() != null)
+            return null;
+        var lecturer = lecturerRepository.getById(subjectCreate.getLecturer().getId());
         var subjectEntity = subjectMapper.mapSubjectToEntity(subjectCreate, lecturer);
         var response = subjectRepository.save(subjectEntity);
         var result = subjectMapper.mapSubjectToDTO(response);
-        return result;
+        return Optional.of(result);
     }
 
     @Override

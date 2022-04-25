@@ -2,8 +2,8 @@ package pl.byrka.uczelnia.model.mapper.impl;
 
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Subject.SubjectDTO;
+import pl.byrka.uczelnia.model.Emuns.GroupTypeEnum;
 import pl.byrka.uczelnia.model.Entity.Lecturer.LecturerEntity;
-import pl.byrka.uczelnia.model.DTO.Subject.SubjectCreate;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
 import pl.byrka.uczelnia.model.mapper.LecturerMapper;
 import pl.byrka.uczelnia.model.mapper.SubjectMapper;
@@ -22,14 +22,14 @@ public class SubjectMapperImpl implements SubjectMapper {
                 .ects(src.getEcts())
                 .name(src.getName())
                 .ects(src.getEcts())
-                .type(src.getType())
+                .type(GroupTypeEnum.valueOf(src.getType()))
                 .lecturer(lecturerMapper.mapFromEntity(src.getLecturer()))
                 .build();
     }
 
 
     @Override
-    public SubjectEntity mapSubjectToEntity(SubjectCreate src,LecturerEntity lecturer ) {
+    public SubjectEntity mapSubjectToEntity(SubjectDTO src,LecturerEntity lecturer ) {
         return SubjectEntity.builder()
                 .ects(src.getEcts())
                 .name(src.getName())
@@ -45,7 +45,7 @@ public class SubjectMapperImpl implements SubjectMapper {
                 .ects(subjectDTO.getEcts())
                 .name(subjectDTO.getName())
                 .ects(subjectDTO.getEcts())
-                .type(subjectDTO.getType())
+                .type(String.valueOf(subjectDTO.getType()))
                 .lecturer(lecturerMapper.mapFromDTO(subjectDTO.getLecturer()))
                 .build();
     }
