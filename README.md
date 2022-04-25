@@ -1,5 +1,6 @@
 ## Uczelnia
  Spring Boot simple project - main branch "Development"
+ 
  Static Code Analisy - SNYK
  
 ## Information
