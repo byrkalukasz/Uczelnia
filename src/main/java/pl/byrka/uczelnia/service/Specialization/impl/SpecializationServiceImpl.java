@@ -11,6 +11,7 @@ import pl.byrka.uczelnia.service.Specialization.SpecializationService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SpecializationServiceImpl implements SpecializationService {
@@ -33,21 +34,21 @@ public class SpecializationServiceImpl implements SpecializationService {
     }
 
     @Override
-    public SpecializationDTO getSpecializationById(long id) {
-        var response = specializationRepository.getById(id);
-        return specializationMapper.mapFromEntity(response);
+    public Optional<SpecializationDTO> getSpecializationById(long id) {
+        return specializationRepository.findById(id)
+                .map(specializationMapper::mapFromEntity);
     }
 
     @Override
-    public SpecializationDTO addSpecialization(SpecializationCreateDTO specializationCreateDTO) {
+    public Optional<SpecializationDTO> addSpecialization(SpecializationCreateDTO specializationCreateDTO) {
         var send = specializationMapper.mapFromCreate(specializationCreateDTO);
         var response = specializationRepository.save(send);
-        return specializationMapper.mapFromEntity(response);
+        return Optional.of(specializationMapper.mapFromEntity(response));
 
     }
 
     @Override
-    public SpecializationDTO updateSpecialization(SpecializationDTO specializationDTO) {
+    public Optional<SpecializationDTO> updateSpecialization(SpecializationDTO specializationDTO) {
         SpecializationEntity existingSpecialization = specializationRepository.findById(specializationDTO.getId())
                 .orElseThrow(() -> new UczelniaException("Specialization","id", specializationDTO.getId())
                 );
@@ -56,6 +57,6 @@ public class SpecializationServiceImpl implements SpecializationService {
 
         specializationRepository.save(existingSpecialization);
 
-        return specializationMapper.mapFromEntity(existingSpecialization);
+        return Optional.of(specializationMapper.mapFromEntity(existingSpecialization));
     }
 }

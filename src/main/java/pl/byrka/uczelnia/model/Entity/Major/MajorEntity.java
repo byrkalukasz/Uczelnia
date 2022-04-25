@@ -1,6 +1,8 @@
 package pl.byrka.uczelnia.model.Entity.Major;
 
 import lombok.*;
+import pl.byrka.uczelnia.model.Emuns.LearningTypeEnum;
+import pl.byrka.uczelnia.model.Emuns.LearningscheduleEnum;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 import pl.byrka.uczelnia.model.Entity.Group.GroupEntity;
 import pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity;
@@ -20,12 +22,17 @@ import java.util.List;
 public class MajorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private long id;
     @Column(name = "name", nullable = false)
-    public String name;
+    private String name;
     @Column(name = "active", nullable = false)
-    public boolean active;
-
+    private boolean active;
+    @Column(name = "type")
+    private String type;
+    @Column(name = "schedule")
+    private String schedule;
+    @Column(name = "year")
+    private String startYear;
     @ManyToMany(mappedBy = "major")
     private List<GroupEntity> group;
     @ManyToMany(mappedBy = "major")

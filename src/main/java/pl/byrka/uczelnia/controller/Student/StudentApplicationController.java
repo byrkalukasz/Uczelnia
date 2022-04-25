@@ -4,20 +4,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.byrka.uczelnia.model.DTO.File.ResponseMessage;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationDTO;
 import pl.byrka.uczelnia.service.Student.StudentApplicationService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping(value = "/api/v1/application")
-public class StudentApplicationControler {
+public class StudentApplicationController {
     private final StudentApplicationService studentApplicationService;
 
-    public StudentApplicationControler(StudentApplicationService studentApplicationService) {
+    public StudentApplicationController(StudentApplicationService studentApplicationService) {
         this.studentApplicationService = studentApplicationService;
     }
 
@@ -34,7 +34,7 @@ public class StudentApplicationControler {
         return ResponseEntity.ok(response);
     }
     @PostMapping()
-    public ResponseEntity<StudentApplicationDTO> addNewApplication(@RequestBody StudentApplicationCreateDTO studentApplicationDTO){
+    public ResponseEntity<StudentApplicationDTO> addNewApplication(@Valid  @RequestBody StudentApplicationCreateDTO studentApplicationDTO){
         log.info("Entering [getApplicationByID]");
         var response = studentApplicationService.addNewApplication(studentApplicationDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);

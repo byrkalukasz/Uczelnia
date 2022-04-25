@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface LecturerService {
     List<LecturerDTO> getAllLecturer();
-    LecturerDTO createLecturer(LecturerCreateDTO lecturerCreate);
+    Optional<LecturerDTO> createLecturer(LecturerCreateDTO lecturerCreate);
     Optional<LecturerDTO> getLecturerFromId(long id);
-    LecturerDTO updateLecturer(LecturerUpdateDTO lecturerUpdate);
+    Optional<LecturerDTO> updateLecturer(LecturerUpdateDTO lecturerUpdate);
 }

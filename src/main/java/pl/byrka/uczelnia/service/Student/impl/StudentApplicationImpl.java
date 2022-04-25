@@ -65,6 +65,7 @@ public class StudentApplicationImpl implements StudentApplicationService {
         var response = studentApplicationRepository.getById(id);
         var dst = studentApplicationMapper.mapFromEntity(response);
         return dst;
+
     }
 
     @Override

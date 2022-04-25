@@ -34,9 +34,9 @@ public class GroupMapperImpl implements GroupMapper {
                 .major(majorMapper.mapFromEntity(src.getMajor()))
                 .maxStudentCount(src.getMaxStudentCount())
                 .shortName(src.getShortName())
-                .specialization(specializationMapper.mapFromEntity(src.specialization))
+                .specialization(specializationMapper.mapFromEntity(src.getSpecialization()))
                 .StartYear(src.getStartYear())
-                .subject(subjectMapper.mapSubjectToDTO(src.subject))
+                .subject(subjectMapper.mapSubjectToDTO(src.getSubject()))
                 .type(GroupTypeEnum.valueOf(src.getType()))
                 .build();
     }
@@ -55,7 +55,7 @@ public class GroupMapperImpl implements GroupMapper {
                 .specialization(specializationMapper.mapFromDTO(src.specialization))
                 .StartYear(src.getStartYear())
                 .subject(subjectMapper.mapToEntity(src.subject))
-                .type(src.getType().getGrojupTypeEnum())
+                .type(src.getType().getGrooupTypeEnum())
                 .build();
     }
 }
