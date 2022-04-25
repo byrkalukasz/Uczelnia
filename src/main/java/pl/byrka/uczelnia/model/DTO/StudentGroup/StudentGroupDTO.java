@@ -10,7 +10,7 @@ import pl.byrka.uczelnia.model.DTO.Student.StudentDTO;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentGroupDTO {
-    private long id;
+    private Long id;
     private StudentDTO student;
     private GroupDTO group;
 }

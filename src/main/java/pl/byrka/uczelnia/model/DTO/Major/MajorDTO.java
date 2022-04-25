@@ -10,7 +10,7 @@ import pl.byrka.uczelnia.model.Emuns.LearningscheduleEnum;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MajorDTO {
-    public long id;
+    public Long id;
     public String name;
     public boolean active;
     public LearningTypeEnum type;

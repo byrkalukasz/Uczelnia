@@ -10,7 +10,7 @@ import pl.byrka.uczelnia.model.DTO.Specialization.SpecializationDTO;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentDTO {
-    public long id;
+    public Long id;
     public String name;
     public String surname;
     public boolean active;

@@ -33,7 +33,7 @@ public class GradeEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
     private SubjectEntity subject;
-    
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lecturer_id", referencedColumnName = "id")
     private LecturerEntity lecturer;
