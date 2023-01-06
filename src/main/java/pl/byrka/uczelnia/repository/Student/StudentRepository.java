@@ -14,4 +14,5 @@ public interface StudentRepository extends JpaRepository<StudentEntity, Long> {
 
     @Query(query)
     public List<Long> fingAllMajorsInStudentWithoutGroup();
+
 }

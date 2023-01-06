@@ -12,6 +12,7 @@ import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentApplicationMessage;
 import pl.byrka.uczelnia.model.Emuns.ApplicationStatusEnum;
 import pl.byrka.uczelnia.model.Entity.File.DocumentEntity;
+import pl.byrka.uczelnia.model.Entity.Person;
 import pl.byrka.uczelnia.model.Entity.Student.StudentApplicationEntity;
 import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 import pl.byrka.uczelnia.model.mapper.StudentApplicationMapper;
@@ -180,8 +181,10 @@ public class StudentApplicationImpl implements StudentApplicationService {
     private void createStudent(long id){
         var applicant = studentApplicationRepository.getById(id);
         var student = StudentEntity.builder()
-                .name(applicant.getName())
-                .surname(applicant.getSurname())
+                .person(Person.builder()
+                        .name(applicant.getName())
+                        .surname(applicant.getSurname())
+                        .build())
                 .active(true)
                 .major(applicant.getMajor())
                 .specialization(applicant.getSpecialization())

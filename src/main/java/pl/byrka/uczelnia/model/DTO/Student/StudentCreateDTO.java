@@ -1,6 +1,7 @@
 package pl.byrka.uczelnia.model.DTO.Student;
 
 import lombok.*;
+import pl.byrka.uczelnia.model.DTO.PersonDTO;
 
 @Getter
 @Setter
@@ -8,8 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentCreateDTO {
-    private String name;
-    private String surname;
-    private long major;
-    private long specialization;
+//    private String name;
+//    private String surname;
+    private PersonDTO person;
+    private Long major;
+    private Long specialization;
 }

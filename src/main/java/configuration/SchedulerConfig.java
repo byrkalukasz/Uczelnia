@@ -1,4 +1,4 @@
-package pl.byrka.uczelnia.configuration;
+package configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

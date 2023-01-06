@@ -19,10 +19,8 @@ public class StudentGroupEntity {
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "student_id", referencedColumnName = "id", nullable = true)
     private StudentEntity student;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = true)
     private GroupEntity group;
 
 }

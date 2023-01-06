@@ -37,6 +37,6 @@ public class MajorEntity {
     private List<GroupEntity> group;
     @ManyToMany(mappedBy = "major")
     private List<StudentApplicationEntity> studentApplication;
-    @ManyToMany(mappedBy = "major")
+    @OneToMany(mappedBy = "major")
     private List<StudentEntity> studentEntity;
 }

@@ -32,17 +32,14 @@ public class GroupEntity {
     @Column(name = "type", nullable = false)
     private String type;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "major_id", referencedColumnName = "id", nullable = true)
     private MajorEntity major;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = true)
     private SpecializationEntity specialization;
     @Column(name = "learningSchedule", nullable = false)
     private String learningSchedule;
     @Column(name = "learningType", nullable = false)
     private String learningType;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "subject_id", referencedColumnName = "id", nullable = true)
     private SubjectEntity subject;
     @Column(name = "maxStudentCount", nullable = false)
     private int maxStudentCount;

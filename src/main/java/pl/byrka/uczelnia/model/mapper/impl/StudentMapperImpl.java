@@ -7,6 +7,9 @@ import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 import pl.byrka.uczelnia.model.mapper.MajorMapper;
 import pl.byrka.uczelnia.model.mapper.StudentMapper;
 
+import static pl.byrka.uczelnia.model.mapper.impl.PersonMapper.mapPersonFromDto;
+import static pl.byrka.uczelnia.model.mapper.impl.PersonMapper.mapPersonToDto;
+
 @Service
 public class StudentMapperImpl implements StudentMapper {
     private final MajorMapper majorMapper;
@@ -19,8 +22,7 @@ public class StudentMapperImpl implements StudentMapper {
     public StudentDTO mapFromEntity(StudentEntity studentEntity) {
         return StudentDTO.builder()
                 .id(studentEntity.getId())
-                .name(studentEntity.getName())
-                .surname(studentEntity.getSurname())
+                .person(mapPersonToDto(studentEntity.getPerson()))
                 .active(studentEntity.isActive())
                 .build();
     }
@@ -29,8 +31,7 @@ public class StudentMapperImpl implements StudentMapper {
     public StudentEntity mapFromDTO(StudentDTO studentDTO) {
         return StudentEntity.builder()
                 .id(studentDTO.getId())
-                .name(studentDTO.getName())
-                .surname(studentDTO.getSurname())
+                .person(mapPersonFromDto(studentDTO.getPerson()))
                 .active(studentDTO.isActive())
                 .build();
 
@@ -39,8 +40,6 @@ public class StudentMapperImpl implements StudentMapper {
     @Override
     public StudentEntity mapFromCreate(StudentCreateDTO studentCreateDTO) {
         return StudentEntity.builder()
-                .name(studentCreateDTO.getName())
-                .surname(studentCreateDTO.getSurname())
                 .active(true)
                 .build();
     }
