@@ -1,7 +1,6 @@
 package pl.byrka.uczelnia.model.mapper.impl;
 
 import org.springframework.stereotype.Service;
-import pl.byrka.uczelnia.model.DTO.Specialization.SpecializationCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Specialization.SpecializationDTO;
 import pl.byrka.uczelnia.model.Entity.Specjalization.SpecializationEntity;
 import pl.byrka.uczelnia.model.mapper.SpecializationMapper;
@@ -27,7 +26,7 @@ public class SpecializationMapperImpl implements SpecializationMapper {
     }
 
     @Override
-    public SpecializationEntity mapFromCreate(SpecializationCreateDTO src) {
+    public SpecializationEntity mapFromCreate(SpecializationDTO src) {
         return SpecializationEntity.builder()
                 .name(src.getName())
                 .active(src.isActive())

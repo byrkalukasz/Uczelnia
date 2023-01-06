@@ -1,5 +1,6 @@
 package pl.byrka.uczelnia.model.mapper.impl;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Grade.GradeCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Grade.GradeDTO;
@@ -14,7 +15,7 @@ import pl.byrka.uczelnia.model.mapper.LecturerMapper;
 import pl.byrka.uczelnia.model.mapper.StudentMapper;
 import pl.byrka.uczelnia.model.mapper.SubjectMapper;
 
-@Service
+@Component
 public class GradeMapperImpl implements GradeMapper {
     private final LecturerMapper lecturerMapper;
     private final SubjectMapper subjectMapper;

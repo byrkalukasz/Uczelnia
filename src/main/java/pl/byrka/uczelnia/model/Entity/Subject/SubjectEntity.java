@@ -27,13 +27,13 @@ public class SubjectEntity implements Serializable {
     @Column(name = "type")
     private String type;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "lecturer_id")
     private LecturerEntity lecturer;
 
-    @ManyToMany(mappedBy = "subject")
+    @OneToMany(mappedBy = "subject")
     private List<GroupEntity> group;
-    @ManyToMany(mappedBy = "subject")
+    @OneToMany(mappedBy = "subject")
     private List<GradeEntity> grade;
 
 }

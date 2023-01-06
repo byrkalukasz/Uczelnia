@@ -2,7 +2,6 @@ package pl.byrka.uczelnia.service.Specialization.impl;
 
 import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.exception.UczelniaException;
-import pl.byrka.uczelnia.model.DTO.Specialization.SpecializationCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Specialization.SpecializationDTO;
 import pl.byrka.uczelnia.model.Entity.Specjalization.SpecializationEntity;
 import pl.byrka.uczelnia.model.mapper.SpecializationMapper;
@@ -40,7 +39,9 @@ public class SpecializationServiceImpl implements SpecializationService {
     }
 
     @Override
-    public Optional<SpecializationDTO> addSpecialization(SpecializationCreateDTO specializationCreateDTO) {
+    public Optional<SpecializationDTO> addSpecialization(SpecializationDTO specializationCreateDTO) {
+        if(specializationCreateDTO.getId() != null)
+            return null;
         var send = specializationMapper.mapFromCreate(specializationCreateDTO);
         var response = specializationRepository.save(send);
         return Optional.of(specializationMapper.mapFromEntity(response));

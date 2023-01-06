@@ -29,9 +29,11 @@ public class GradeEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private StudentEntity student;
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
     private SubjectEntity subject;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lecturer_id", referencedColumnName = "id")
     private LecturerEntity lecturer;
