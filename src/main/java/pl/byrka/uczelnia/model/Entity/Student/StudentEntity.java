@@ -22,6 +22,8 @@ public class StudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "nrAlbumu", nullable = false)
+    private boolean studentNumber;
     @Column(name = "active", nullable = false)
     private boolean active;
 

@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface DocumentRepository extends JpaRepository<DocumentEntity,Long> {
 
-    String getAllDocumentsForApplication = "SELECT d FROM DocumentEntity d JOIN FETCH d.studentApplication s WHERE s.id = :id";
-
-    @Query(value = getAllDocumentsForApplication)
+    @Query(value = "SELECT d FROM DocumentEntity d JOIN FETCH d.studentApplication s WHERE s.id = :id")
     List<DocumentEntity> getAllDocumentsForApplication(@Param("id") long id);
 }

@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 public class PersonDTO {
 
-    private long id;
+    private Long id;
 
     private String name;
 

@@ -150,6 +150,8 @@ public class StudentApplicationImpl implements StudentApplicationService {
         //Aktualnie wymagamy Wnoisek, życiorys i świadectwo
         List<String> documents = new ArrayList<>();
         List<String> passType = Arrays.asList("MAT", "ZYC", "WPS");
+
+
         for(var obj : documentsList){
             var type = obj.getType();
             if(!documents.contains(type) && passType.contains(type)){
