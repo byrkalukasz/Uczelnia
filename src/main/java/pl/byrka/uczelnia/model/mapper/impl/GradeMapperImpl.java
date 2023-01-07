@@ -1,7 +1,6 @@
 package pl.byrka.uczelnia.model.mapper.impl;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Grade.GradeCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Grade.GradeDTO;
 import pl.byrka.uczelnia.model.Emuns.GradeStateEnum;
@@ -12,7 +11,6 @@ import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
 import pl.byrka.uczelnia.model.Entity.Subject.SubjectEntity;
 import pl.byrka.uczelnia.model.mapper.GradeMapper;
 import pl.byrka.uczelnia.model.mapper.LecturerMapper;
-import pl.byrka.uczelnia.model.mapper.StudentMapper;
 import pl.byrka.uczelnia.model.mapper.SubjectMapper;
 
 @Component

@@ -5,8 +5,6 @@ import pl.byrka.uczelnia.exception.UczelniaException;
 import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentDTO;
 import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
-import pl.byrka.uczelnia.model.mapper.StudentMapper;
-import pl.byrka.uczelnia.repository.PersonRepository;
 import pl.byrka.uczelnia.repository.Student.StudentRepository;
 import pl.byrka.uczelnia.service.PersonService;
 import pl.byrka.uczelnia.service.Student.StudentService;
@@ -15,39 +13,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static pl.byrka.uczelnia.model.mapper.impl.PersonMapper.mapPersonFromDto;
+import static pl.byrka.uczelnia.model.mapper.impl.StudentMapperImpl.mapStudentFromCreate;
+import static pl.byrka.uczelnia.model.mapper.impl.StudentMapperImpl.mapStudentFromEntity;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    private final StudentMapper studentMapper;
     private final StudentRepository studentRepository;
     private final PersonService personService;
 
-    public StudentServiceImpl(StudentMapper studentMapper, StudentRepository studentRepository, PersonService personService) {
-        this.studentMapper = studentMapper;
+    public StudentServiceImpl( StudentRepository studentRepository, PersonService personService) {
         this.studentRepository = studentRepository;
         this.personService = personService;
     }
 
     @Override
-    public Optional<StudentDTO> getStudentById(long id) {
+    public Optional<StudentDTO> getStudentById(Long id) {
         var response = studentRepository.findById(id);
-        return response.map(studentMapper::mapFromEntity);
+        return response.map( x -> mapStudentFromEntity(x));
     }
 
     @Override
     public StudentDTO addStudent(StudentCreateDTO studentCreateDTO) {
         var person = personService.addNewPerson(studentCreateDTO.getPerson());
-        var studentEntity = studentMapper.mapFromCreate(studentCreateDTO);
+        var studentEntity = mapStudentFromCreate(studentCreateDTO);
         studentEntity.setPerson(person);
-        return studentMapper.mapFromEntity(studentRepository.save(studentEntity));
+        return mapStudentFromEntity(studentRepository.save(studentEntity));
     }
 
     @Override
     public List<StudentDTO> getAllStudents() {
         var response = studentRepository.findAll();
         List<StudentDTO> result = new ArrayList<>();
-        response.stream().map(studentMapper::mapFromEntity);
+        response.stream().map(x -> mapStudentFromEntity(x));
 
         return result;
     }
@@ -59,14 +56,14 @@ public class StudentServiceImpl implements StudentService {
                 );
         existingStudent.setActive(studentDTO.isActive());
 
-        return Optional.of(studentMapper.mapFromEntity(existingStudent));
+        return Optional.of(mapStudentFromEntity(existingStudent));
     }
 
     @Override
     public List<StudentDTO> getAllActiveStudents() {
         List<StudentDTO> activeStudents = new ArrayList<>();
         var response = studentRepository.findAll();
-        response.stream().map(studentMapper::mapFromEntity);
+        response.stream().map(x -> mapStudentFromEntity(x));
 
         return activeStudents;
     }

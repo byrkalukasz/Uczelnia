@@ -4,22 +4,14 @@ import org.springframework.stereotype.Service;
 import pl.byrka.uczelnia.model.DTO.Student.StudentDTO;
 import pl.byrka.uczelnia.model.DTO.Student.StudentCreateDTO;
 import pl.byrka.uczelnia.model.Entity.Student.StudentEntity;
-import pl.byrka.uczelnia.model.mapper.MajorMapper;
-import pl.byrka.uczelnia.model.mapper.StudentMapper;
 
 import static pl.byrka.uczelnia.model.mapper.impl.PersonMapper.mapPersonFromDto;
 import static pl.byrka.uczelnia.model.mapper.impl.PersonMapper.mapPersonToDto;
 
 @Service
-public class StudentMapperImpl implements StudentMapper {
-    private final MajorMapper majorMapper;
+public class StudentMapperImpl {
 
-    public StudentMapperImpl(MajorMapper majorMapper) {
-        this.majorMapper = majorMapper;
-    }
-
-    @Override
-    public StudentDTO mapFromEntity(StudentEntity studentEntity) {
+    public static StudentDTO mapStudentFromEntity(StudentEntity studentEntity) {
         return StudentDTO.builder()
                 .id(studentEntity.getId())
                 .person(mapPersonToDto(studentEntity.getPerson()))
@@ -27,8 +19,7 @@ public class StudentMapperImpl implements StudentMapper {
                 .build();
     }
 
-    @Override
-    public StudentEntity mapFromDTO(StudentDTO studentDTO) {
+    public static StudentEntity mapStudentFromDTO(StudentDTO studentDTO) {
         return StudentEntity.builder()
                 .id(studentDTO.getId())
                 .person(mapPersonFromDto(studentDTO.getPerson()))
@@ -37,8 +28,7 @@ public class StudentMapperImpl implements StudentMapper {
 
     }
 
-    @Override
-    public StudentEntity mapFromCreate(StudentCreateDTO studentCreateDTO) {
+    public static StudentEntity mapStudentFromCreate(StudentCreateDTO studentCreateDTO) {
         return StudentEntity.builder()
                 .active(true)
                 .build();

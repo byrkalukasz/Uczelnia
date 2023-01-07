@@ -5,7 +5,6 @@ import pl.byrka.uczelnia.model.DTO.StudentGroup.StudentGroupDTO;
 import pl.byrka.uczelnia.model.Entity.StudentGroup.StudentGroupEntity;
 import pl.byrka.uczelnia.model.mapper.GroupMapper;
 import pl.byrka.uczelnia.model.mapper.StudentGroupMapper;
-import pl.byrka.uczelnia.model.mapper.StudentMapper;
 
 @Service
 public class StudentGroupMapperImpl implements StudentGroupMapper {

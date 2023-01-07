@@ -8,7 +8,6 @@ import pl.byrka.uczelnia.model.DTO.Grade.GradeUpdateDTO;
 import pl.byrka.uczelnia.model.Entity.Grade.GradeEntity;
 import pl.byrka.uczelnia.model.mapper.GradeMapper;
 import pl.byrka.uczelnia.model.mapper.LecturerMapper;
-import pl.byrka.uczelnia.model.mapper.StudentMapper;
 import pl.byrka.uczelnia.model.mapper.SubjectMapper;
 import pl.byrka.uczelnia.repository.Grade.GradeRepository;
 import pl.byrka.uczelnia.repository.Lecturer.LecturerRepository;

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StudentService {
-    Optional<StudentDTO> getStudentById(long id);
+    Optional<StudentDTO> getStudentById(Long id);
     StudentDTO addStudent(StudentCreateDTO studentCreateDTO);
     List<StudentDTO> getAllStudents();
     Optional<StudentDTO>  updateStudent(StudentDTO studentDTO);
