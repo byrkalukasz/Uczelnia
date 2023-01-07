@@ -9,6 +9,7 @@ import pl.byrka.uczelnia.model.Entity.Specjalization.SpecializationEntity;
 import pl.byrka.uczelnia.model.Entity.StudentGroup.StudentGroupEntity;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Getter
@@ -24,6 +25,12 @@ public class StudentEntity {
     private long id;
     @Column(name = "nrAlbumu", nullable = false)
     private boolean studentNumber;
+    @Column(name = "creationDate", nullable = false)
+    private ZonedDateTime creationDate;
+    @Column(name = "modificationDate")
+    private ZonedDateTime modificationDate;
+    @Column(name = "modificationEmployeeId")
+    private Long modificationEmployeeId;
     @Column(name = "active", nullable = false)
     private boolean active;
 

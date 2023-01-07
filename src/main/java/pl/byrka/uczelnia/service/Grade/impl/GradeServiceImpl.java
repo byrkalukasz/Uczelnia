@@ -28,9 +28,9 @@ public class GradeServiceImpl implements GradeService {
     private final GradeMapper gradeMapper;
     private final LecturerMapper lecturerMapper;
     private final SubjectMapper subjectMapper;
-    private final StudentMapper studentMapper;
 
-    public GradeServiceImpl(GradeRepository gradeRepository, SubjectRepository subjectRepository, StudentRepository studentRepository, LecturerRepository lecturerRepository, GradeMapper gradeMapper, LecturerMapper lecturerMapper, SubjectMapper subjectMapper, StudentMapper studentMapper) {
+    public GradeServiceImpl(GradeRepository gradeRepository, SubjectRepository subjectRepository, StudentRepository studentRepository,
+                            LecturerRepository lecturerRepository, GradeMapper gradeMapper, LecturerMapper lecturerMapper, SubjectMapper subjectMapper) {
         this.gradeRepository = gradeRepository;
         this.subjectRepository = subjectRepository;
         this.studentRepository = studentRepository;
@@ -38,7 +38,6 @@ public class GradeServiceImpl implements GradeService {
         this.gradeMapper = gradeMapper;
         this.lecturerMapper = lecturerMapper;
         this.subjectMapper = subjectMapper;
-        this.studentMapper = studentMapper;
     }
 
     @Override

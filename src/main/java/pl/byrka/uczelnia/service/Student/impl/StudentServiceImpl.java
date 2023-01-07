@@ -9,9 +9,11 @@ import pl.byrka.uczelnia.repository.Student.StudentRepository;
 import pl.byrka.uczelnia.service.PersonService;
 import pl.byrka.uczelnia.service.Student.StudentService;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static pl.byrka.uczelnia.model.mapper.impl.StudentMapperImpl.mapStudentFromCreate;
 import static pl.byrka.uczelnia.model.mapper.impl.StudentMapperImpl.mapStudentFromEntity;
@@ -21,7 +23,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final PersonService personService;
 
-    public StudentServiceImpl( StudentRepository studentRepository, PersonService personService) {
+    public StudentServiceImpl(StudentRepository studentRepository, PersonService personService) {
         this.studentRepository = studentRepository;
         this.personService = personService;
     }
@@ -29,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Optional<StudentDTO> getStudentById(Long id) {
         var response = studentRepository.findById(id);
-        return response.map( x -> mapStudentFromEntity(x));
+        return response.map(x -> mapStudentFromEntity(x));
     }
 
     @Override
@@ -37,24 +39,23 @@ public class StudentServiceImpl implements StudentService {
         var person = personService.addNewPerson(studentCreateDTO.getPerson());
         var studentEntity = mapStudentFromCreate(studentCreateDTO);
         studentEntity.setPerson(person);
+        studentEntity.setCreationDate(ZonedDateTime.now());
         return mapStudentFromEntity(studentRepository.save(studentEntity));
     }
 
     @Override
     public List<StudentDTO> getAllStudents() {
         var response = studentRepository.findAll();
-        List<StudentDTO> result = new ArrayList<>();
-        response.stream().map(x -> mapStudentFromEntity(x));
-
-        return result;
+        return response.stream().map(x -> mapStudentFromEntity(x)).collect(Collectors.toList());
     }
 
     @Override
     public Optional<StudentDTO> updateStudent(StudentDTO studentDTO) {
         StudentEntity existingStudent = studentRepository.findById(studentDTO.getId())
-                .orElseThrow(() -> new UczelniaException("Student","id", studentDTO.getId())
+                .orElseThrow(() -> new UczelniaException("Student", "id", studentDTO.getId())
                 );
         existingStudent.setActive(studentDTO.isActive());
+        existingStudent.setModificationDate(ZonedDateTime.now());
 
         return Optional.of(mapStudentFromEntity(existingStudent));
     }
@@ -63,8 +64,6 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDTO> getAllActiveStudents() {
         List<StudentDTO> activeStudents = new ArrayList<>();
         var response = studentRepository.findAll();
-        response.stream().map(x -> mapStudentFromEntity(x));
-
-        return activeStudents;
+        return response.stream().map(x -> mapStudentFromEntity(x)).collect(Collectors.toList());
     }
 }

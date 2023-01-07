@@ -15,6 +15,9 @@ public class StudentMapperImpl {
         return StudentDTO.builder()
                 .id(studentEntity.getId())
                 .person(mapPersonToDto(studentEntity.getPerson()))
+                .creationDate(studentEntity.getCreationDate())
+                .modificationEmployeeId(studentEntity.getModificationEmployeeId())
+                .modificationDate(studentEntity.getModificationDate())
                 .active(studentEntity.isActive())
                 .build();
     }
@@ -30,6 +33,7 @@ public class StudentMapperImpl {
 
     public static StudentEntity mapStudentFromCreate(StudentCreateDTO studentCreateDTO) {
         return StudentEntity.builder()
+                .person(mapPersonFromDto(studentCreateDTO.getPerson()))
                 .active(true)
                 .build();
     }

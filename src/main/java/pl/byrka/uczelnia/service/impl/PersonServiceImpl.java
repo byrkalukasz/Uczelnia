@@ -31,7 +31,7 @@ public class PersonServiceImpl implements PersonService {
 
     private Person checkIfPersonExist(String pesel){
         var person = personRepository.findByPESEL(pesel);
-        if (person != null)
+        if (person.isPresent())
             return person.get();
         else
             return null;

@@ -13,16 +13,17 @@ import pl.byrka.uczelnia.model.mapper.GradeMapper;
 import pl.byrka.uczelnia.model.mapper.LecturerMapper;
 import pl.byrka.uczelnia.model.mapper.SubjectMapper;
 
+import static pl.byrka.uczelnia.model.mapper.impl.StudentMapperImpl.mapStudentFromDTO;
+import static pl.byrka.uczelnia.model.mapper.impl.StudentMapperImpl.mapStudentFromEntity;
+
 @Component
 public class GradeMapperImpl implements GradeMapper {
     private final LecturerMapper lecturerMapper;
     private final SubjectMapper subjectMapper;
-    private final StudentMapper studentMapper;
 
-    public GradeMapperImpl(LecturerMapper lecturerMapper, SubjectMapper subjectMapper, StudentMapper studentMapper) {
+    public GradeMapperImpl(LecturerMapper lecturerMapper, SubjectMapper subjectMapper) {
         this.lecturerMapper = lecturerMapper;
         this.subjectMapper = subjectMapper;
-        this.studentMapper = studentMapper;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class GradeMapperImpl implements GradeMapper {
                 .status(GradeStateEnum.valueOf(gradeEntity.getStatus()))
                 .lecturer(lecturerMapper.mapFromEntity(gradeEntity.getLecturer()))
                 .subject(subjectMapper.mapSubjectToDTO(gradeEntity.getSubject()))
-                .student(studentMapper.mapFromEntity(gradeEntity.getStudent()))
+                .student(mapStudentFromEntity(gradeEntity.getStudent()))
                 .build();
     }
 
@@ -45,7 +46,7 @@ public class GradeMapperImpl implements GradeMapper {
                 .status(gradeDTO.getStatus().getGradeStateEnum())
                 .lecturer(lecturerMapper.mapFromDTO(gradeDTO.getLecturer()))
                 .subject(subjectMapper.mapToEntity(gradeDTO.getSubject()))
-                .student(studentMapper.mapFromDTO(gradeDTO.getStudent()))
+                .student(mapStudentFromDTO(gradeDTO.getStudent()))
                 .build();
     }
 
